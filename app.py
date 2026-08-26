@@ -100,22 +100,27 @@ if 'lr_data' in st.session_state:
     def get_receipt_html(copy_title):
         handwritten_style = "font-family: 'Brush Script MT', 'Comic Sans MS', cursive; font-size: 18px; font-weight: bold; display: inline-block; transform: rotate(-10deg);"
         
-        paid_mark = f"<span style='{handwritten_style} color: blue;'> PAID</span>" if d['pay_type'] == "PAID" else ""
-        topay_mark = f"<span style='{handwritten_style} color: red;'> TO PAY</span>" if d['pay_type'] == "TO PAY" else ""
-        billing_mark = f"<span style='{handwritten_style} color: black;'> BILLING</span>" if d['pay_type'] == "Monthly Billing" else ""
+        paid_mark = f"<span style='{handwritten_style} color: blue;'>✍ PAID</span>" if d['pay_type'] == "PAID" else ""
+        topay_mark = f"<span style='{handwritten_style} color: red;'>✍ TO PAY</span>" if d['pay_type'] == "TO PAY" else ""
+        billing_mark = f"<span style='{handwritten_style} color: black;'>✍ BILLING</span>" if d['pay_type'] == "Monthly Billing" else ""
 
-        # Exact original truck logo styling
+        # Exact truck vector replica from original image
         truck_logo_svg = """
-        <svg width="60" height="40" viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Truck Cabin -->
-            <path d="M10 20 H50 V50 H10 Z" fill="#222" />
-            <path d="M50 30 L65 30 L75 40 V50 H50 Z" fill="#222" />
-            <rect x="55" y="33" width="12" height="8" fill="#FFF" />
-            <!-- Cargo Lines -->
-            <path d="M15 10 L15 20 M25 8 L25 20 M35 6 L35 20 M45 4 L45 20" stroke="#222" stroke-width="3" stroke-linecap="round"/>
+        <svg width="48" height="32" viewBox="0 0 100 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Vertical Cargo Pipes -->
+            <rect x="22" y="8" width="5" height="22" fill="#222"/>
+            <rect x="33" y="5" width="5" height="25" fill="#222"/>
+            <rect x="44" y="2" width="5" height="28" fill="#222"/>
+            <rect x="55" y="0" width="5" height="30" fill="#222"/>
+            <!-- Truck Main Body -->
+            <rect x="18" y="30" width="48" height="20" fill="#222"/>
+            <!-- Cabin -->
+            <path d="M66 35 H82 L92 45 V50 H66 Z" fill="#222"/>
+            <!-- Window -->
+            <rect x="70" y="38" width="10" height="6" fill="#FFF"/>
             <!-- Wheels -->
-            <circle cx="22" cy="52" r="7" fill="#000" stroke="#FFF" stroke-width="2"/>
-            <circle cx="62" cy="52" r="7" fill="#000" stroke="#FFF" stroke-width="2"/>
+            <circle cx="30" cy="52" r="6" fill="#222" stroke="#FFF" stroke-width="2"/>
+            <circle cx="80" cy="52" r="6" fill="#222" stroke="#FFF" stroke-width="2"/>
         </svg>
         """
 
@@ -131,14 +136,16 @@ if 'lr_data' in st.session_state:
 
                     <table style="width: 100%; border-collapse: collapse;">
                         <tr>
-                            <td style="width: 44%; vertical-align: top;">
-                                <div style="display: flex; align-items: center; gap: 4px;">
-                                    {truck_logo_svg}
+                            <td style="width: 46%; vertical-align: top;">
+                                <div style="display: flex; align-items: flex-end; gap: 6px;">
+                                    <div style="margin-bottom: 2px;">
+                                        {truck_logo_svg}
+                                    </div>
                                     <div>
-                                        <div style="font-size: 8px; font-style: italic; color: red; font-weight: bold; margin-bottom: -2px;">Always on Time</div>
-                                        <h2 style="margin: 0; font-size: 17px; font-weight: 900; letter-spacing: -0.2px; line-height: 1; font-family: 'Arial Black', Impact, sans-serif;">
-                                            <span style="color: red;">FORTUNE</span> <span style="color: #000;">EXPRESS CARGO</span>
-                                        </h2>
+                                        <div style="font-size: 8px; font-weight: bold; color: #d32f2f; margin-bottom: -3px; font-family: 'Times New Roman', serif; font-style: italic;">Always on Time</div>
+                                        <div style="font-size: 16px; font-weight: 900; letter-spacing: -0.2px; line-height: 1; font-family: 'Arial Black', Impact, sans-serif; white-space: nowrap;">
+                                            <span style="color: #d32f2f;">FORTUNE</span> <span style="color: #222;">EXPRESS CARGO</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div style="margin-top: 3px; font-size: 9px;">
@@ -146,7 +153,7 @@ if 'lr_data' in st.session_state:
                                     <b>M. :</b> 9173165886
                                 </div>
                             </td>
-                            <td style="width: 32%; vertical-align: top; font-size: 9px; line-height: 1.2;">
+                            <td style="width: 30%; vertical-align: top; font-size: 9px; line-height: 1.2;">
                                 <b>FORTUNE EXPRESS CARGO</b><br>
                                 15, Bhagwan Estate, Opp. Ekta Hotel Lane, Aslali - 382427<br>
                                 <b>PAN:</b> AGVPM3701F | <b>GST:</b> 24AGVPM3701F2ZF<br>
@@ -286,7 +293,7 @@ if 'lr_data' in st.session_state:
     <body style="margin:0; padding:0; background:#fff;">
         <div style="text-align: center; margin-bottom: 8px;" class="print-btn">
             <button onclick="window.print()" style="background-color: #007bff; color: white; padding: 12px 24px; border: none; font-size: 16px; font-weight: bold; border-radius: 5px; cursor: pointer;">
-                🖨️ PRINT ALL 3 COPIES (EXACT ORIGINAL LOGO)
+                🖨️ PRINT ALL 3 COPIES (EXACT SAME AS ORIGINAL BOOK)
             </button>
         </div>
         <div>
