@@ -29,9 +29,7 @@ next_lr = 3901 if df.empty else int(df["LR_No"].max()) + 1
 
 st.subheader("નવી LR એન્ટ્રી કરો (Create New LR)")
 
-# Extract unique names and gst for auto-suggestions
 consignor_names = df_party["Name"].dropna().unique().tolist() if not df_party.empty else []
-consignor_gsts = df_party["GST"].dropna().unique().tolist() if not df_party.empty else []
 
 with st.form("lr_form"):
     col1, col2 = st.columns(2)
@@ -40,8 +38,7 @@ with st.form("lr_form"):
         lr_no = st.number_input("LR Number / Docket Number", value=next_lr)
         date = st.date_input("Date", datetime.now())
         
-        # Auto-complete/Select Consignor
-        consignor = st.selectbox("Consignor Name (Place of Supply)", options=[""] + consignor_names, index=0, help="Select or type new")
+        consignor = st.selectbox("Consignor Name (Place of Supply)", options=[""] + consignor_names, index=0)
         if not consignor:
             consignor = st.text_input("Or Type Consignor Name", "IFFCO - MC CROP SCIENCE PVT LTD")
             
@@ -67,46 +64,19 @@ with st.form("lr_form"):
         inv_no_val_wt = st.text_input("Invoice No. & Value | Weight Details", "")
 
     with col4:
-        calc_mode = st.radio("Amount Entry Mode", ["Detailed Freight & GST Calculation", "Direct Grand Total Input"], index=0)
+        # Direct Amount with GST input option as requested
+        entered_amount = st.number_input("Enter Total Amount (GST ke sath / Direct Amount)", value=236.46, help="Yahan aap jo bhi amount likhenge wahi grand total me aa jayega.")
         
-        if calc_mode == "Detailed Freight & GST Calculation":
-            basic_freight = st.number_input("Basic Freight", value=200.39)
-            val_surcharge = st.number_input("Value Surcharge (FOV)", value=0.0)
-            docket_chg = st.number_input("Docket Charges", value=0.0)
-            other_chg = st.number_input("Other Charges", value=0.0)
-            oda_chg = st.number_input("ODA Charges", value=0.0)
-            surcharges = st.number_input("Surcharges", value=0.0)
-            tax_type = st.selectbox("GST Type", ["SGST/CGST (18%)", "IGST (18%)", "None"])
-        else:
-            direct_grand_total = st.number_input("Direct Grand Total Amount (₹)", value=236.46)
-            basic_freight = direct_grand_total
-            val_surcharge = docket_chg = other_chg = oda_chg = surcharges = 0.0
-            tax_type = "None"
-            
+        # Backward calculation for internal fields display if needed
+        grand_total = entered_amount
+        basic_freight = round(grand_total / 1.18, 2)  2  # Assuming 18% inclusive GST back-calculation for breakup
+        gst_amount = round(grand_total - basic_freight, 2)
+        
         pay_type = st.radio("Payment Status", ["Monthly Billing", "PAID", "TO PAY"], index=1)
 
     submit = st.form_submit_button("SAVE & GENERATE LR")
 
 if submit:
-    if calc_mode == "Detailed Freight & GST Calculation":
-        subtotal = basic_freight + val_surcharge + docket_chg + other_chg + oda_chg + surcharges
-        if tax_type == "SGST/CGST (18%)":
-            cgst = round(subtotal * 0.09, 2)
-            sgst = round(subtotal * 0.09, 2)
-            igst = 0.0
-        elif tax_type == "IGST (18%)":
-            cgst = 0.0
-            sgst = 0.0
-            igst = round(subtotal * 0.18, 2)
-        else:
-            cgst = sgst = igst = 0.0
-        grand_total = round(subtotal + cgst + sgst + igst, 2)
-    else:
-        subtotal = direct_grand_total
-        cgst = sgst = igst = 0.0
-        grand_total = direct_grand_total
-
-    # Save to main database
     new_data = pd.DataFrame([[
         lr_no, str(date), consignor, consignor_gst, consignor_contact, 
         consignee, consignee_gst, consignee_contact, from_place, to_place, 
@@ -114,7 +84,6 @@ if submit:
     ]], columns=df.columns)
     new_data.to_csv(DATA_FILE, mode='a', header=False, index=False)
 
-    # Save party to party database for auto-complete
     if consignor and consignor not in consignor_names:
         new_party = pd.DataFrame([[consignor, consignor_gst, consignor_contact]], columns=["Name", "GST", "Contact"])
         new_party.to_csv(PARTY_FILE, mode='a', header=False, index=False)
@@ -127,9 +96,7 @@ if submit:
         "consignee_contact": consignee_contact, "from": from_place, "to": to_place, "instruction": instruction,
         "pkg_type": pkg_type, "no_pkg": no_pkg, "volume": volume, "goods_desc": goods_desc,
         "inv_no_val_wt": inv_no_val_wt,
-        "basic_freight": basic_freight, "val_surcharge": val_surcharge, "docket_chg": docket_chg,
-        "other_chg": other_chg, "oda_chg": oda_chg, "surcharges": surcharges,
-        "subtotal": subtotal, "cgst": cgst, "sgst": sgst, "igst": igst, "grand_total": grand_total,
+        "basic_freight": basic_freight, "gst_amount": gst_amount, "grand_total": grand_total,
         "pay_type": pay_type
     }
 
@@ -233,29 +200,23 @@ if 'lr_data' in st.session_state:
                             <td style="border: 1px solid #000; padding: 2px; width: 20%;">{d['pkg_type']}</td>
                             <td style="border: 1px solid #000; padding: 2px; width: 15%;">{d['no_pkg']}</td>
                             <td style="border: 1px solid #000; padding: 2px; width: 10%;">{d['volume']}</td>
-                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">GRAND TOTAL / FREIGHT</td>
-                            <td style="border: 1px solid #000; text-align: right; padding: 1px 4px; font-weight: bold;">{d['grand_total']:.2f}</td>
-                            <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 24px; color: #008000; font-weight: 900;" rowspan="11">{billing_mark}</td>
-                            <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 24px; color: #008000; font-weight: 900;" rowspan="11">{paid_mark}</td>
-                            <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 24px; color: #008000; font-weight: 900;" rowspan="11">{topay_mark}</td>
+                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">BASIC FREIGHT</td>
+                            <td style="border: 1px solid #000; text-align: right; padding: 1px 4px;">{d['basic_freight']:.2f}</td>
+                            <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 24px; color: #008000; font-weight: 900;" rowspan="3">{billing_mark}</td>
+                            <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 24px; color: #008000; font-weight: 900;" rowspan="3">{paid_mark}</td>
+                            <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 24px; color: #008000; font-weight: 900;" rowspan="3">{topay_mark}</td>
                         </tr>
                         <tr>
-                            <td style="border: 1px solid #000; padding: 3px 5px; text-align: left;" colspan="3" rowspan="10" vertical-align="top">
+                            <td style="border: 1px solid #000; padding: 3px 5px; text-align: left;" colspan="3" rowspan="2" vertical-align="top">
                                 <b>GOODS DESCRIPTION :</b> {d['goods_desc']}<br>
                                 <b>NO OF PACKAGES :</b> {d['no_pkg']}
                             </td>
-                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">BASIC FREIGHT</td>
-                            <td style="border: 1px solid #000; text-align: right; padding: 1px 4px;">{d['basic_freight']:.2f}</td>
+                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">GST (Inc.)</td>
+                            <td style="border: 1px solid #000; text-align: right; padding: 1px 4px;">{d['gst_amount']:.2f}</td>
                         </tr>
-                        <tr>
-                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">SURCHARGES / TAX</td>
-                            <td style="border: 1px solid #000; text-align: right; padding: 1px 4px;">{d['cgst'] + d['sgst'] + d['igst']:.2f}</td>
-                        </tr>
-                        <tr>
-                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;" colspan="2"><b>TOTAL AMOUNT PAYABLE</b></td>
-                        </tr>
-                        <tr style="font-weight: bold; background: #eee;" colspan="2">
-                            <td style="border: 1px solid #000; text-align: right; padding: 2px 4px;" colspan="2">{d['grand_total']:.2f}</td>
+                        <tr style="font-weight: bold; background: #eee;">
+                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">GRAND TOTAL</td>
+                            <td style="border: 1px solid #000; text-align: right; padding: 1px 4px;">{d['grand_total']:.2f}</td>
                         </tr>
                     </table>
 
@@ -264,7 +225,7 @@ if 'lr_data' in st.session_state:
                         <b>INVOICE NO. & VALUE | WEIGHT DETAILS :-</b> {d['inv_no_val_wt']}
                     </div>
 
-                    <!-- Complete Terms & Conditions (Exact 5 Points from latest photo) -->
+                    <!-- Complete Terms & Conditions (Exact from your photo) -->
                     <div style="font-size: 8.5px; margin-top: 1px; text-align: justify; line-height: 1.1; color: #000; font-weight: 600;">
                         (૧) પેક દાગીનામાં રહેલા માલ માટેની પરમીટ સંબંધી અગર ગુનાહિત માલ માટેની જવાબદારી કંપનીની રહેશે નહીં. (૨) આગ, ચોરી, વરસાદ, અકસ્માત, હુલ્લડ, હડતાલ વગેરે અણધાર્યા સંજોગોમાં માલને કોઈપણ નુકશાન થશે તો કંપનીની જવાબદારી રહેશે નહીં. (૩) ગ્રાહક પોતાના માલનું નુકશાન રોકવા માટે વીમો ઉતરાવી લેવો જરૂરી છે. (૪) માલ અંગેની કોઈપણ જાતની ફરીયાદ હોય તો સાત દિવસની અંદર કંપનીને જાણ કરવી. ત્યારબાદ કોઈપણ જાતની કમ્પ્લેન ચાલે નહીં. (૫) કોઈપણ કારણસર ગવર્નમેન્ટ ઓથોરીટી માલ અટકાવશે, જપ્ત કરશે તો કંપની જવાબદાર રહેશે નહીં. (૬) જો ભાડું પહેલેથી ન હોય તો માલ ઉપર લીયન રહેશે. લેનાર કંપની જો માલ લેવાની ના પાડશે તો લાવવા, લઇ જવા અને સ્ટોર કરવાની થઈ લાગશે તે પૂરેપૂરી રકમ ભરપાઈ કરશે માલ ફૂટી કટી આપવાબંધનરહેશે. (૭) અમોએ શરત જે કાંઈ ભરેલી હોય તે વ્યાપારીને બંધનકર્તા રહેશે. (૮) ન્યાયનું કેન્દ્ર વાપી રહેશે. The Company is not responsible for Breakage, Leakage, Damage, Shortage in pack Cartoon/Case/Box/Bags of Goods.
                     </div>
