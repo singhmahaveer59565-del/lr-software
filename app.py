@@ -41,7 +41,7 @@ else:
 
 st.title("🚛 FORTUNE EXPRESS CARGO - LR GENERATOR")
 
-next_lr = 3901 if df.empty else int(df["LR_No"].max()) + 1
+next_lr = 23938 if df.empty else int(df["LR_No"].max()) + 1
 
 st.subheader("નવી LR એન્ટ્રી કરો (Create New LR)")
 
@@ -52,7 +52,7 @@ with st.form("lr_form"):
     
     with col1:
         lr_no = st.number_input("LR Number / Docket Number", value=next_lr)
-        date = st.date_input("Date", datetime.now())
+        date = st.date_input("Date", datetime.now(), format="DD/MM/YYYY")
         
         consignor = st.selectbox("Consignor Name (Place of Supply)", options=[""] + consignor_names, index=0)
         if not consignor:
@@ -60,22 +60,22 @@ with st.form("lr_form"):
             
         consignor_gst = st.text_input("Consignor GST", "")
         consignor_contact = st.text_input("Consignor Contact / Pincode", "")
-        from_place = st.text_input("From", "Aslali")
+        from_place = st.text_input("From", "Sarkhej Amd.")
         
     with col2:
         consignee = st.text_input("Consignee Name (Delivery Destination)", "")
         consignee_gst = st.text_input("Consignee GST", "")
         consignee_contact = st.text_input("Consignee Contact", "")
         to_place = st.text_input("To", "")
-        instruction = st.text_input("Instruction", "")
+        instruction = st.text_input("Instruction", "Navsari")
         
     st.markdown("---")
     col3, col4 = st.columns(2)
     
     with col3:
-        pkg_type = st.text_input("Type of Packaging", "")
-        no_pkg = st.text_input("No. of Packages", "")
-        volume = st.text_input("Volume (Inch)", "")
+        pkg_type = st.text_input("Type of Packaging", "BOX")
+        no_pkg = st.text_input("No. of Packages", "1")
+        volume = st.text_input("Volume (Inch)", "-")
         goods_desc = st.text_input("Goods Description", "")
         inv_no_val_wt = st.text_input("Invoice No. & Value | Weight Details", "")
 
@@ -104,13 +104,14 @@ with st.form("lr_form"):
         oda_charges = 0.0
         surcharges = 0.0
         
-        pay_type = st.radio("Payment Status", ["Monthly Billing", "PAID", "TO PAY"], index=1)
+        pay_type = st.radio("Payment Status", ["Monthly Billing", "PAID", "TO PAY"], index=2)
 
     submit = st.form_submit_button("SAVE & GENERATE LR")
 
 if submit:
+    formatted_date = date.strftime("%d-%m-%Y")
     new_data = pd.DataFrame([[
-        lr_no, str(date), consignor, consignor_gst, consignor_contact, 
+        lr_no, formatted_date, consignor, consignor_gst, consignor_contact, 
         consignee, consignee_gst, consignee_contact, from_place, to_place, 
         no_pkg, goods_desc, grand_total, pay_type
     ]], columns=[
@@ -127,7 +128,7 @@ if submit:
     st.success(f"✅ LR No. {lr_no} સફળતાપૂર્વક સેવ થઈ ગયું છે!")
 
     st.session_state['lr_data'] = {
-        "lr_no": lr_no, "date": str(date), "consignor": consignor, "consignor_gst": consignor_gst,
+        "lr_no": lr_no, "date": date.strftime("%d-%m-%Y"), "consignor": consignor, "consignor_gst": consignor_gst,
         "consignor_contact": consignor_contact, "consignee": consignee, "consignee_gst": consignee_gst,
         "consignee_contact": consignee_contact, "from": from_place, "to": to_place, "instruction": instruction,
         "pkg_type": pkg_type, "no_pkg": no_pkg, "volume": volume, "goods_desc": goods_desc,
@@ -142,9 +143,9 @@ if 'lr_data' in st.session_state:
     d = st.session_state['lr_data']
 
     def get_receipt_html(copy_title):
-        paid_mark = "✔" if d['pay_type'] == "PAID" else ""
-        topay_mark = "✔" if d['pay_type'] == "TO PAY" else ""
-        billing_mark = "✔" if d['pay_type'] == "Monthly Billing" else ""
+        paid_mark = "✔" if d['pay_type'] == "PAID" else "<span style='font-family: \"Caveat\", \"Brush Script MT\", cursive; font-size: 14px; color: #444;'>❌</span>"
+        topay_mark = "✔" if d['pay_type'] == "TO PAY" else "<span style='font-family: \"Caveat\", \"Brush Script MT\", cursive; font-size: 14px; color: #444;'>❌</span>"
+        billing_mark = "✔" if d['pay_type'] == "Monthly Billing" else "<span style='font-family: \"Caveat\", \"Brush Script MT\", cursive; font-size: 14px; color: #444;'>❌</span>"
 
         return f"""
         <div class="copy-box" style="border: 1px solid #000; padding: 2px 4px; background: #fff; font-family: Arial, sans-serif; box-sizing: border-box; height: 30.5vh; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 2mm; page-break-inside: avoid; break-inside: avoid;">
@@ -169,13 +170,13 @@ if 'lr_data' in st.session_state:
                                     <div style="font-size: 9.5px; color: #d32f2f; font-weight: bold; font-style: italic; font-family: 'Times New Roman', serif; line-height: 1;">
                                         Always on Time
                                     </div>
-                                    <div style="font-size: 17px; font-weight: 900; font-family: 'Georgia', 'Times New Roman', serif; letter-spacing: 0.5px; line-height: 1.1; white-space: nowrap;">
+                                    <div style="font-size: 16px; font-weight: 900; font-family: 'Georgia', 'Times New Roman', serif; letter-spacing: 0.5px; line-height: 1.1; white-space: nowrap;">
                                         <span style="color: #d32f2f;">FORTUNE</span> <span style="color: #000;">EXPRESS CARGO</span>
                                     </div>
                                 </div>
                             </div>
                             <div style="font-size: 9px; line-height: 1.1; margin-top: 1px;">
-                                <b>E-mail :</b> fortuneexpresscargo@gmail.com | <b>M. :</b> 9173165886<br>
+                                <b>E-mail :</b> fortuneexpresscargo@gmail.com | <b style="color:#d32f2f; font-size:10px;">M.: 9427450535</b><br>
                                 <b>Add :</b> 15, Bhagwan Estate, Opp. Ekta Hotel Lane, Aslali - 382427
                             </div>
                         </td>
@@ -235,9 +236,9 @@ if 'lr_data' in st.session_state:
                         <td style="border: 1px solid #000; padding: 1px; width: 10%;">{d['volume']}</td>
                         <td style="border: 1px solid #000; text-align: left; padding: 1px 3px;">BASIC FREIGHT</td>
                         <td style="border: 1px solid #000; text-align: right; padding: 1px 3px;">{d['basic_freight']:.2f}</td>
-                        <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 16px; color: #008000; font-weight: 900;" rowspan="11">{billing_mark}</td>
-                        <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 16px; color: #008000; font-weight: 900;" rowspan="11">{paid_mark}</td>
-                        <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 16px; color: #008000; font-weight: 900;" rowspan="11">{topay_mark}</td>
+                        <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 15px; font-weight: bold;" rowspan="11">{billing_mark}</td>
+                        <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 15px; font-weight: bold;" rowspan="11">{paid_mark}</td>
+                        <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 15px; font-weight: bold;" rowspan="11">{topay_mark}</td>
                     </tr>
                     <tr>
                         <td style="border: 1px solid #000; padding: 2px 3px; text-align: left;" colspan="3" rowspan="10" vertical-align="top">
@@ -295,7 +296,7 @@ if 'lr_data' in st.session_state:
             </div>
 
             <div style="font-size: 8px; border-top: 1px solid #000; padding-top: 1px; margin-top: 1px; line-height: 1.05; font-weight: bold; text-align: justify;">
-                <b>Navsari :-</b> 7089093833 &nbsp;|&nbsp; <b>Valsad :-</b> 7A2B294826 &nbsp;|&nbsp; <b>Vapi :-</b> 9427335518 &nbsp;|&nbsp; <b>Bharuch :-</b> 9427587136 &nbsp;|&nbsp; <b>Ankleshwar :-</b> 9107587136 &nbsp;|&nbsp; <b>Surat :-</b> 8467818918 &nbsp;|&nbsp; <b>Chikhali :-</b> 7089093833 &nbsp;|&nbsp; <b>Sarkhej Amd. :-</b> 9427450535
+                <b>Navsari :-</b> 8000537847 &nbsp;|&nbsp; <b>Valsad :-</b> 6352700152 &nbsp;|&nbsp; <b>Vapi :-</b> 9427335518 &nbsp;| |&nbsp; <b>Ankleshwar :-</b> 9978811411 &nbsp;|&nbsp; <b>Surat :-</b> 8467818918 &nbsp;||&nbsp; <b>Sarkhej Amd. :-</b> 9427450535 || narol 9173165886 ||  madhupura 9427450535
             </div>
         </div>
         """
