@@ -100,17 +100,22 @@ if 'lr_data' in st.session_state:
     def get_receipt_html(copy_title):
         handwritten_style = "font-family: 'Brush Script MT', 'Comic Sans MS', cursive; font-size: 18px; font-weight: bold; display: inline-block; transform: rotate(-10deg);"
         
-        paid_mark = f"<span style='{handwritten_style} color: blue;'>✍ PAID</span>" if d['pay_type'] == "PAID" else ""
-        topay_mark = f"<span style='{handwritten_style} color: red;'>✍ TO PAY</span>" if d['pay_type'] == "TO PAY" else ""
-        billing_mark = f"<span style='{handwritten_style} color: black;'>✍ BILLING</span>" if d['pay_type'] == "Monthly Billing" else ""
+        paid_mark = f"<span style='{handwritten_style} color: blue;'> PAID</span>" if d['pay_type'] == "PAID" else ""
+        topay_mark = f"<span style='{handwritten_style} color: red;'> TO PAY</span>" if d['pay_type'] == "TO PAY" else ""
+        billing_mark = f"<span style='{handwritten_style} color: black;'> BILLING</span>" if d['pay_type'] == "Monthly Billing" else ""
 
-        custom_logo_svg = """
-        <svg width="45" height="42" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="5" y="5" width="90" height="70" rx="8" fill="#000"/>
-            <path d="M15 45 L40 20 L65 45 L85 25" stroke="#FFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="85" cy="25" r="5" fill="#FFF"/>
-            <path d="M20 58 L80 58" stroke="#FFF" stroke-width="6" stroke-linecap="round"/>
-            <text x="50%" y="72%" dominant-baseline="middle" text-anchor="middle" fill="#FFF" font-size="10" font-weight="bold" font-family="Arial">EXPRESS</text>
+        # Exact original truck logo styling
+        truck_logo_svg = """
+        <svg width="60" height="40" viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Truck Cabin -->
+            <path d="M10 20 H50 V50 H10 Z" fill="#222" />
+            <path d="M50 30 L65 30 L75 40 V50 H50 Z" fill="#222" />
+            <rect x="55" y="33" width="12" height="8" fill="#FFF" />
+            <!-- Cargo Lines -->
+            <path d="M15 10 L15 20 M25 8 L25 20 M35 6 L35 20 M45 4 L45 20" stroke="#222" stroke-width="3" stroke-linecap="round"/>
+            <!-- Wheels -->
+            <circle cx="22" cy="52" r="7" fill="#000" stroke="#FFF" stroke-width="2"/>
+            <circle cx="62" cy="52" r="7" fill="#000" stroke="#FFF" stroke-width="2"/>
         </svg>
         """
 
@@ -127,14 +132,16 @@ if 'lr_data' in st.session_state:
                     <table style="width: 100%; border-collapse: collapse;">
                         <tr>
                             <td style="width: 44%; vertical-align: top;">
-                                <div style="display: flex; align-items: center; gap: 6px;">
-                                    {custom_logo_svg}
+                                <div style="display: flex; align-items: center; gap: 4px;">
+                                    {truck_logo_svg}
                                     <div>
-                                        <h2 style="margin: 0; font-size: 18px; font-weight: 900; letter-spacing: 0.5px; line-height: 1; font-family: 'Arial Black', Impact, sans-serif;">FORTUNE EXPRESS CARGO</h2>
-                                        <i style="font-size: 9px;">Always on Time</i>
+                                        <div style="font-size: 8px; font-style: italic; color: red; font-weight: bold; margin-bottom: -2px;">Always on Time</div>
+                                        <h2 style="margin: 0; font-size: 17px; font-weight: 900; letter-spacing: -0.2px; line-height: 1; font-family: 'Arial Black', Impact, sans-serif;">
+                                            <span style="color: red;">FORTUNE</span> <span style="color: #000;">EXPRESS CARGO</span>
+                                        </h2>
                                     </div>
                                 </div>
-                                <div style="margin-top: 2px; font-size: 9px;">
+                                <div style="margin-top: 3px; font-size: 9px;">
                                     <b>E-mail :</b> fortuneexpresscargo@gmail.com<br>
                                     <b>M. :</b> 9173165886
                                 </div>
@@ -279,7 +286,7 @@ if 'lr_data' in st.session_state:
     <body style="margin:0; padding:0; background:#fff;">
         <div style="text-align: center; margin-bottom: 8px;" class="print-btn">
             <button onclick="window.print()" style="background-color: #007bff; color: white; padding: 12px 24px; border: none; font-size: 16px; font-weight: bold; border-radius: 5px; cursor: pointer;">
-                🖨️ PRINT ALL 3 COPIES (PERFECT FIT)
+                🖨️ PRINT ALL 3 COPIES (EXACT ORIGINAL LOGO)
             </button>
         </div>
         <div>
