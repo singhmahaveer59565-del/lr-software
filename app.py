@@ -103,122 +103,126 @@ if 'lr_data' in st.session_state:
         billing_mark = "✔" if d['pay_type'] == "Monthly Billing" else ""
 
         return f"""
-        <div style="border: 1px solid #000; padding: 3px; margin-bottom: 5px; background: #fff; font-family: Arial, sans-serif; font-size: 8px; box-sizing: border-box; page-break-inside: avoid;">
-            <div style="float: right; font-weight: bold; font-size: 8px; border: 1px solid #000; padding: 1px 4px; background: #f0f0f0;">{copy_title}</div>
-            
-            <div style="background: #000; color: #fff; text-align: center; font-weight: bold; font-size: 7.5px; padding: 1px 0;">
-                કાચ, પ્લાસ્ટીક, ફાયબર અથવા લીક્વીડ માલ ડેમેજ અથવા લીક થાય તો તેની જવાબદારી કંપનીની રહેશે નહીં.
+        <div class="copy-box" style="border: 2px solid #000; padding: 6px; margin-bottom: 8px; background: #fff; font-family: Arial, sans-serif; font-size: 10.5px; box-sizing: border-box; height: 32.5vh; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <div style="float: right; font-weight: bold; font-size: 10px; border: 1.5px solid #000; padding: 1px 6px; background: #e0e0e0;">{copy_title}</div>
+                
+                <div style="background: #000; color: #fff; text-align: center; font-weight: bold; font-size: 9.5px; padding: 2px 0; margin-bottom: 4px;">
+                    કાચ, પ્લાસ્ટીક, ફાયબર અથવા લીક્વીડ માલ ડેમેજ અથવા લીક થાય તો તેની જવાબદારી કંપનીની રહેશે નહીં.
+                </div>
+
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="width: 42%; vertical-align: top;">
+                            <h3 style="margin: 0; font-size: 16px; font-weight: 900; line-height: 1.1;">FORTUNE EXPRESS CARGO</h3>
+                            <i style="font-size: 9.5px;">Always on Time</i><br>
+                            <b>E-mail :</b> fortuneexpresscargo@gmail.com<br>
+                            <b>M. :</b> 9173165886
+                        </td>
+                        <td style="width: 33%; vertical-align: top; font-size: 9.5px; line-height: 1.2;">
+                            <b>FORTUNE EXPRESS CARGO</b><br>
+                            15, Bhagwan Estate, Opp. Ekta Hotel Lane, Aslali - 382427<br>
+                            <b>PAN:</b> AGVPM3701F | <b>GST:</b> 24AGVPM3701F2ZF<br>
+                            <b>SAC No. :</b> 9965
+                        </td>
+                        <td style="width: 25%; vertical-align: top; text-align: center;">
+                            <div style="border: 1.5px solid #000; padding: 2px;">
+                                <span style="font-size: 8.5px; font-weight: bold;">DOCKET NUMBER</span>
+                                <div style="font-size: 18px; font-weight: bold; color: #d32f2f; line-height: 1;">{d['lr_no']}</div>
+                                <div style="font-size: 9.5px;"><b>DATE:</b> {d['date']}</div>
+                            </div>
+                            <table style="width: 100%; border: 1px solid #000; margin-top: 2px; font-size: 9.5px; text-align: left;">
+                                <tr><td style="border: 1px solid #000; padding: 1px 3px;"><b>FROM:</b> {d['from']}</td></tr>
+                                <tr><td style="border: 1px solid #000; padding: 1px 3px;"><b>TO:</b> {d['to']}</td></tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="width: 100%; border-collapse: collapse; margin-top: 4px; border: 1.5px solid #000; font-size: 9.5px;">
+                    <tr>
+                        <td style="width: 50%; border: 1px solid #000; padding: 3px; vertical-align: top;">
+                            <b>CONSIGNOR DETAILS (PLACE OF SUPPLY)</b><br>
+                            NAME: {d['consignor']}<br>
+                            GST NO.: {d['consignor_gst']} | CONTACT: {d['consignor_pincode']}
+                        </td>
+                        <td style="width: 50%; border: 1px solid #000; padding: 3px; vertical-align: top;">
+                            <b>CONSIGNEE DETAILS (DELIVERY DESTINATION)</b><br>
+                            NAME: {d['consignee']}<br>
+                            GST NO.: {d['consignee_gst']} | INSTRUCTION: {d['instruction']}
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="width: 100%; border-collapse: collapse; margin-top: 4px; border: 1.5px solid #000; font-size: 9px; text-align: center;">
+                    <tr style="background: #e0e0e0; font-weight: bold;">
+                        <td style="border: 1px solid #000; width: 35%; padding: 2px;" colspan="4">PACKAGE INFORMATION</td>
+                        <td style="border: 1px solid #000; width: 25%; padding: 2px;" colspan="2">IN RUPEES</td>
+                        <td style="border: 1px solid #000; width: 13.3%;">Monthly Billing</td>
+                        <td style="border: 1px solid #000; width: 13.3%;">PAID</td>
+                        <td style="border: 1px solid #000; width: 13.4%;">TO PAY</td>
+                    </tr>
+                    <tr style="font-weight: bold;">
+                        <td style="border: 1px solid #000; padding: 2px;">TYPE OF PKG</td>
+                        <td style="border: 1px solid #000; padding: 2px;">NO OF PKG</td>
+                        <td style="border: 1px solid #000; padding: 2px;">VOLUME</td>
+                        <td style="border: 1px solid #000; padding: 2px;">TOTAL PKG</td>
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px;">BASIC FREIGHT</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px;">{d['basic_freight']:.2f}</td>
+                        <td style="border: 1px solid #000; font-size: 15px;" rowspan="7">{billing_mark}</td>
+                        <td style="border: 1px solid #000; font-size: 15px; color: green;" rowspan="7">{paid_mark}</td>
+                        <td style="border: 1px solid #000; font-size: 15px; color: red;" rowspan="7">{topay_mark}</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 2px;">{d['pkg_type']}</td>
+                        <td style="border: 1px solid #000; padding: 2px;">{d['no_pkg']}</td>
+                        <td style="border: 1px solid #000; padding: 2px;">{d['volume']}</td>
+                        <td style="border: 1px solid #000; padding: 2px;">{d['total_pkg']}</td>
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px;">VAL. SURCHARGE/DOCKET</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px;">{(d['val_surcharge'] + d['docket_chg']):.2f}</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; font-weight: bold; padding: 2px;" colspan="4">INVOICE DETAILS</td>
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px;">OTHER/ODA/SURCHARGE</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px;">{(d['other_chg'] + d['oda_chg'] + d['surcharges']):.2f}</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 2px;">INV: {d['inv_no']}</td>
+                        <td style="border: 1px solid #000; padding: 2px;">VAL: {d['inv_val']}</td>
+                        <td style="border: 1px solid #000; padding: 2px;">ACT WT: {d['act_wt']}</td>
+                        <td style="border: 1px solid #000; padding: 2px;">CHG WT: {d['chg_wt']}</td>
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px;">CGST ({d['cgst']}) / SGST ({d['sgst']})</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px;">{(d['cgst'] + d['sgst']):.2f}</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; font-size: 7.5px; text-align: left; padding: 2px;" colspan="4" rowspan="3">
+                            <b>BRANCH PHONES:</b> Navsari: 8000537847 | Valsad: 6351700152 | Vapi: 9427335518 | Ankleshwar: 9978811411 | Surat: 8467818918 | Sarkhej: 9427450535 | Madhupura: 9173165886 | Narol: 9427450535
+                        </td>
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px;">IGST</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px;">{d['igst']:.2f}</td>
+                    </tr>
+                    <tr style="font-weight: bold; background: #e0e0e0;">
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px;">GRAND TOTAL</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px;">{d['grand_total']:.2f}</td>
+                    </tr>
+                </table>
+
+                <div style="font-size: 7.5px; margin-top: 3px; text-align: justify; line-height: 1.1;">
+                    (૧) પેક દાગીનામાં રહેલા માલ માટેની બીલ અથવા પરમીટ કે E-way bill ની સંપૂર્ણ જવાબદારી ગ્રાહકની રહેશે. (૨) આગ, ચોરી, વરસાદ, અકસ્માત, હુલ્લડ વગેરે અણધાર્યા સંજોગોમાં માલને કોઈપણ નુકશાન થશે તો કંપનીની જવાબદારી રહેશે નહીં. (૩) માલ અંગેની કોઈપણ જાતની ફરીયાદ હશે તો ૧૦ દિવસની અંદર શરુ કરવી. (૪) કોઈપણ કારાણસર ગવર્નમેન્ટ ઓથોરીટી માલ અટકાવશે, જપ્ત કરશે તો કંપની જવાબદાર રહેશે નહીં. (૬) ન્યાયનું ક્ષેત્ર વાપી રહેશે.
+                </div>
             </div>
 
-            <table style="width: 100%; border-collapse: collapse; margin-top: 2px;">
-                <tr>
-                    <td style="width: 42%; vertical-align: top;">
-                        <h3 style="margin: 0; font-size: 13px; font-weight: 900;">FORTUNE EXPRESS CARGO</h3>
-                        <i style="font-size: 7.5px;">Always on Time</i><br>
-                        <b>E-mail :</b> fortuneexpresscargo@gmail.com<br>
-                        <b>M. :</b> 9173165886
-                    </td>
-                    <td style="width: 33%; vertical-align: top; font-size: 7.5px;">
-                        <b>FORTUNE EXPRESS CARGO</b><br>
-                        15, Bhagwan Estate, Opp. Ekta Hotel Lane, Aslali - 382427<br>
-                        <b>PAN:</b> AGVPM3701F | <b>GST:</b> 24AGVPM3701F2ZF<br>
-                        <b>SAC No. :</b> 9965
-                    </td>
-                    <td style="width: 25%; vertical-align: top; text-align: center;">
-                        <div style="border: 1px solid #000; padding: 1px;">
-                            <span style="font-size: 7px; font-weight: bold;">DOCKET NUMBER</span>
-                            <div style="font-size: 14px; font-weight: bold; color: #d32f2f;">{d['lr_no']}</div>
-                            <div style="font-size: 7.5px;"><b>DATE:</b> {d['date']}</div>
-                        </div>
-                        <table style="width: 100%; border: 1px solid #000; margin-top: 1px; font-size: 7.5px; text-align: left;">
-                            <tr><td style="border: 1px solid #000; padding: 1px;"><b>FROM:</b> {d['from']}</td></tr>
-                            <tr><td style="border: 1px solid #000; padding: 1px;"><b>TO:</b> {d['to']}</td></tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-
-            <table style="width: 100%; border-collapse: collapse; margin-top: 2px; border: 1px solid #000; font-size: 7.5px;">
-                <tr>
-                    <td style="width: 50%; border: 1px solid #000; padding: 2px; vertical-align: top;">
-                        <b>CONSIGNOR DETAILS (PLACE OF SUPPLY)</b><br>
-                        NAME: {d['consignor']}<br>
-                        GST NO.: {d['consignor_gst']} | CONTACT: {d['consignor_pincode']}
-                    </td>
-                    <td style="width: 50%; border: 1px solid #000; padding: 2px; vertical-align: top;">
-                        <b>CONSIGNEE DETAILS (DELIVERY DESTINATION)</b><br>
-                        NAME: {d['consignee']}<br>
-                        GST NO.: {d['consignee_gst']} | INSTRUCTION: {d['instruction']}
-                    </td>
-                </tr>
-            </table>
-
-            <table style="width: 100%; border-collapse: collapse; margin-top: 2px; border: 1px solid #000; font-size: 7px; text-align: center;">
-                <tr style="background: #e0e0e0; font-weight: bold;">
-                    <td style="border: 1px solid #000; width: 35%;" colspan="4">PACKAGE INFORMATION</td>
-                    <td style="border: 1px solid #000; width: 25%;" colspan="2">IN RUPEES</td>
-                    <td style="border: 1px solid #000; width: 13%;">Monthly Billing</td>
-                    <td style="border: 1px solid #000; width: 13.5%;">PAID</td>
-                    <td style="border: 1px solid #000; width: 13.5%;">TO PAY</td>
-                </tr>
-                <tr style="font-weight: bold;">
-                    <td style="border: 1px solid #000;">TYPE OF PKG</td>
-                    <td style="border: 1px solid #000;">NO OF PKG</td>
-                    <td style="border: 1px solid #000;">VOLUME</td>
-                    <td style="border: 1px solid #000;">TOTAL PKG</td>
-                    <td style="border: 1px solid #000; text-align: left;">BASIC FREIGHT</td>
-                    <td style="border: 1px solid #000; text-align: right;">{d['basic_freight']:.2f}</td>
-                    <td style="border: 1px solid #000; font-size: 11px;" rowspan="7">{billing_mark}</td>
-                    <td style="border: 1px solid #000; font-size: 11px; color: green;" rowspan="7">{paid_mark}</td>
-                    <td style="border: 1px solid #000; font-size: 11px; color: red;" rowspan="7">{topay_mark}</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #000;">{d['pkg_type']}</td>
-                    <td style="border: 1px solid #000;">{d['no_pkg']}</td>
-                    <td style="border: 1px solid #000;">{d['volume']}</td>
-                    <td style="border: 1px solid #000;">{d['total_pkg']}</td>
-                    <td style="border: 1px solid #000; text-align: left;">VAL. SURCHARGE/DOCKET</td>
-                    <td style="border: 1px solid #000; text-align: right;">{(d['val_surcharge'] + d['docket_chg']):.2f}</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #000; font-weight: bold;" colspan="4">INVOICE DETAILS</td>
-                    <td style="border: 1px solid #000; text-align: left;">OTHER/ODA/SURCHARGE</td>
-                    <td style="border: 1px solid #000; text-align: right;">{(d['other_chg'] + d['oda_chg'] + d['surcharges']):.2f}</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #000;">INV: {d['inv_no']}</td>
-                    <td style="border: 1px solid #000;">VAL: {d['inv_val']}</td>
-                    <td style="border: 1px solid #000;">ACT WT: {d['act_wt']}</td>
-                    <td style="border: 1px solid #000;">CHG WT: {d['chg_wt']}</td>
-                    <td style="border: 1px solid #000; text-align: left;">CGST ({d['cgst']}) / SGST ({d['sgst']})</td>
-                    <td style="border: 1px solid #000; text-align: right;">{(d['cgst'] + d['sgst']):.2f}</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #000; font-size: 6px; text-align: left;" colspan="4" rowspan="3">
-                        <b>BRANCH PHONES:</b> Navsari: 8000537847 | Valsad: 6351700152 | Vapi: 9427335518 | Ankleshwar: 9978811411 | Surat: 8467818918 | Sarkhej: 9427450535 | Madhupura: 9173165886 | Narol: 9427450535
-                    </td>
-                    <td style="border: 1px solid #000; text-align: left;">IGST</td>
-                    <td style="border: 1px solid #000; text-align: right;">{d['igst']:.2f}</td>
-                </tr>
-                <tr style="font-weight: bold; background: #e0e0e0;">
-                    <td style="border: 1px solid #000; text-align: left;">GRAND TOTAL</td>
-                    <td style="border: 1px solid #000; text-align: right;">{d['grand_total']:.2f}</td>
-                </tr>
-            </table>
-
-            <div style="font-size: 6px; margin-top: 1px; text-align: justify; line-height: 1.0;">
-                (૧) પેક દાગીનામાં રહેલા માલ માટેની બીલ અથવા પરમીટ કે E-way bill ની સંપૂર્ણ જવાબદારી ગ્રાહકની રહેશે. (૨) આગ, ચોરી, વરસાદ, અકસ્માત, હુલ્લડ વગેરે અણધાર્યા સંજોગોમાં માલને કોઈપણ નુકશાન થશે તો કંપનીની જવાબદારી રહેશે નહીં. (૩) માલ અંગેની કોઈપણ જાતની ફરીયાદ હશે તો ૧૦ દિવસની અંદર શરુ કરવી. (૪) કોઈપણ કારાણસર ગવર્નમેન્ટ ઓથોરીટી માલ અટકાવશે, જપ્ત કરશે તો કંપની જવાબદાર રહેશે નહીં. (૬) ન્યાયનું ક્ષેત્ર વાપી રહેશે.
-            </div>
-
-            <table style="width: 100%; margin-top: 1px; font-size: 7px;">
-                <tr>
-                    <td style="width: 60%;">CUSTOMER SIGN: _______________________</td>
-                    <td style="width: 40%; text-align: right;"><b>For, Fortune Express Cargo</b></td>
-                </tr>
-            </table>
-            
-            <div style="background: #000; color: #fff; text-align: center; font-weight: bold; font-size: 7.5px; margin-top: 1px; padding: 1px 0;">
-                કોઈ પણ માલ ૧૦ દિવસ માં છોડાવવામાં નહીં આવે તો ડેમરેજ ચાર્જ લગાવવામાં આવશે. જે પાર્ટીની જવાબદારી રહેશે.
+            <div>
+                <table style="width: 100%; margin-top: 3px; font-size: 8.5px;">
+                    <tr>
+                        <td style="width: 60%;">CUSTOMER SIGN: _______________________</td>
+                        <td style="width: 40%; text-align: right;"><b>For, Fortune Express Cargo</b></td>
+                    </tr>
+                </table>
+                
+                <div style="background: #000; color: #fff; text-align: center; font-weight: bold; font-size: 9px; margin-top: 2px; padding: 2px 0;">
+                    કોઈ પણ માલ ૧૦ દિવસ માં છોડાવવામાં નહીં આવે તો ડેમરેજ ચાર્જ લગાવવામાં આવશે. જે પાર્ટીની જવાબદારી રહેશે.
+                </div>
             </div>
         </div>
         """
@@ -228,20 +232,26 @@ if 'lr_data' in st.session_state:
         @media print {{
             @page {{
                 size: A4 portrait;
-                margin: 4mm;
+                margin: 2mm 5mm 2mm 5mm;
             }}
-            body {{
-                margin: 0;
-                padding: 0;
+            html, body {{
+                height: 100%;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: hidden;
             }}
             .print-btn {{
                 display: none !important;
+            }}
+            .copy-box {{
+                height: 32.5vh !important;
+                page-break-inside: avoid !important;
             }}
         }}
     </style>
     <div style="text-align: center; margin-bottom: 10px;" class="print-btn">
         <button onclick="window.print()" style="background-color: #008CBA; color: white; padding: 10px 20px; border: none; font-size: 15px; font-weight: bold; border-radius: 5px; cursor: pointer;">
-            🖨️ PRINT ALL 3 COPIES ON 1 PAGE (A4)
+            🖨️ PRINT ALL 3 COPIES (FULL A4 PAGE)
         </button>
     </div>
     {get_receipt_html("CONSIGNOR COPY")}
