@@ -80,11 +80,14 @@ with st.form("lr_form"):
         inv_no_val_wt = st.text_input("Invoice No. & Value | Weight Details", "")
 
     with col4:
-        entered_amount = st.number_input("Enter Total Amount (GST ke sath / Direct Amount)", value=236.46)
+        # Example: User can enter 240, which includes GST (18%)
+        entered_amount = st.number_input("Enter Total Amount (GST Included e.g. 240)", value=240.0)
         
         grand_total = entered_amount
         basic_freight = round(grand_total / 1.18, 2)
         gst_amount = round(grand_total - basic_freight, 2)
+        
+        st.info(f"💡 Breakdown -> Basic Freight: {basic_freight} | GST (18%): {gst_amount} | Total: {grand_total}")
         
         pay_type = st.radio("Payment Status", ["Monthly Billing", "PAID", "TO PAY"], index=1)
 
