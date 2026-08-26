@@ -80,14 +80,30 @@ with st.form("lr_form"):
         inv_no_val_wt = st.text_input("Invoice No. & Value | Weight Details", "")
 
     with col4:
-        # Example: User can enter 240, which includes GST (18%)
-        entered_amount = st.number_input("Enter Total Amount (GST Included e.g. 240)", value=240.0)
+        st.markdown("<b>Detailed Amount Breakdown</b>", unsafe_allow_html=True)
+        basic_freight = st.number_input("Basic Freight", value=200.0)
+        value_surcharge = st.number_input("Value Surcharge (FOV)", value=0.0)
+        docket_charges = st.number_input("Docket Charges", value=0.0)
+        other_charges = st.number_input("Other Charges", value=0.0)
+        oda_charges = st.number_input("ODA Charges", value=0.0)
+        surcharges = st.number_input("Surcharges", value=0.0)
         
-        grand_total = entered_amount
-        basic_freight = round(grand_total / 1.18, 2)
-        gst_amount = round(grand_total - basic_freight, 2)
+        total_freight = basic_freight + value_surcharge + docket_charges + other_charges + oda_charges + surcharges
         
-        st.info(f"💡 Breakdown -> Basic Freight: {basic_freight} | GST (18%): {gst_amount} | Total: {grand_total}")
+        gst_type = st.radio("GST Type", ["CGST + SGST (9% + 9%)", "IGST (18%)"], horizontal=True)
+        
+        if "CGST" in gst_type:
+            cgst = round(total_freight * 0.09, 2)
+            sgst = round(total_freight * 0.09, 2)
+            igst = 0.0
+        else:
+            cgst = 0.0
+            sgst = 0.0
+            igst = round(total_freight * 0.18, 2)
+            
+        grand_total = round(total_freight + cgst + sgst + igst, 2)
+        
+        st.info(f"💡 Calculated Grand Total: {grand_total}")
         
         pay_type = st.radio("Payment Status", ["Monthly Billing", "PAID", "TO PAY"], index=1)
 
@@ -117,7 +133,9 @@ if submit:
         "consignee_contact": consignee_contact, "from": from_place, "to": to_place, "instruction": instruction,
         "pkg_type": pkg_type, "no_pkg": no_pkg, "volume": volume, "goods_desc": goods_desc,
         "inv_no_val_wt": inv_no_val_wt,
-        "basic_freight": basic_freight, "gst_amount": gst_amount, "grand_total": grand_total,
+        "basic_freight": basic_freight, "value_surcharge": value_surcharge, "docket_charges": docket_charges,
+        "other_charges": other_charges, "oda_charges": oda_charges, "surcharges": surcharges,
+        "total_freight": total_freight, "cgst": cgst, "sgst": sgst, "igst": igst, "grand_total": grand_total,
         "pay_type": pay_type
     }
 
@@ -205,13 +223,13 @@ if 'lr_data' in st.session_state:
                         </tr>
                     </table>
 
-                    <table style="width: 100%; border-collapse: collapse; margin-top: 1px; border: 1px solid #000; font-size: 11px; text-align: center;">
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 1px; border: 1px solid #000; font-size: 10.5px; text-align: center;">
                         <tr style="font-weight: bold; background: #f2f2f2;">
                             <td style="border: 1px solid #000; width: 45%; padding: 1px;" colspan="3">PACKAGE INFORMATION</td>
                             <td style="border: 1px solid #000; width: 31%; padding: 1px;" colspan="2">IN RUPEES (AMOUNT DETAILS)</td>
-                            <td style="border: 1px solid #000; width: 8%; font-size: 9.5px;">Monthly Billing</td>
-                            <td style="border: 1px solid #000; width: 8%; font-size: 9.5px;">PAID</td>
-                            <td style="border: 1px solid #000; width: 8%; font-size: 9.5px;">TO PAY</td>
+                            <td style="border: 1px solid #000; width: 8%; font-size: 9px;">Monthly Billing</td>
+                            <td style="border: 1px solid #000; width: 8%; font-size: 9px;">PAID</td>
+                            <td style="border: 1px solid #000; width: 8%; font-size: 9px;">TO PAY</td>
                         </tr>
                         <tr>
                             <td style="border: 1px solid #000; padding: 2px; width: 20%;">{d['pkg_type']}</td>
@@ -219,17 +237,49 @@ if 'lr_data' in st.session_state:
                             <td style="border: 1px solid #000; padding: 2px; width: 10%;">{d['volume']}</td>
                             <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">BASIC FREIGHT</td>
                             <td style="border: 1px solid #000; text-align: right; padding: 1px 4px;">{d['basic_freight']:.2f}</td>
-                            <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 24px; color: #008000; font-weight: 900;" rowspan="3">{billing_mark}</td>
-                            <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 24px; color: #008000; font-weight: 900;" rowspan="3">{paid_mark}</td>
-                            <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 24px; color: #008000; font-weight: 900;" rowspan="3">{topay_mark}</td>
+                            <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 22px; color: #008000; font-weight: 900;" rowspan="11">{billing_mark}</td>
+                            <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 22px; color: #008000; font-weight: 900;" rowspan="11">{paid_mark}</td>
+                            <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 22px; color: #008000; font-weight: 900;" rowspan="11">{topay_mark}</td>
                         </tr>
                         <tr>
-                            <td style="border: 1px solid #000; padding: 3px 5px; text-align: left;" colspan="3" rowspan="2" vertical-align="top">
+                            <td style="border: 1px solid #000; padding: 2px 5px; text-align: left;" colspan="3" rowspan="10" vertical-align="top">
                                 <b>GOODS DESCRIPTION :</b> {d['goods_desc']}<br>
                                 <b>NO OF PACKAGES :</b> {d['no_pkg']}
                             </td>
-                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">GST (Inc.)</td>
-                            <td style="border: 1px solid #000; text-align: right; padding: 1px 4px;">{d['gst_amount']:.2f}</td>
+                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">VALUE SURCHARGE (FOV)</td>
+                            <td style="border: 1px solid #000; text-align: right; padding: 1px 4px;">{d['value_surcharge']:.2f}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">DOCKET CHARGES</td>
+                            <td style="border: 1px solid #000; text-align: right; padding: 1px 4px;">{d['docket_charges']:.2f}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">OTHER CHARGES</td>
+                            <td style="border: 1px solid #000; text-align: right; padding: 1px 4px;">{d['other_charges']:.2f}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">ODA CHARGES</td>
+                            <td style="border: 1px solid #000; text-align: right; padding: 1px 4px;">{d['oda_charges']:.2f}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">SURCHARGES</td>
+                            <td style="border: 1px solid #000; text-align: right; padding: 1px 4px;">{d['surcharges']:.2f}</td>
+                        </tr>
+                        <tr style="font-weight: bold; background: #f9f9f9;">
+                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">Total</td>
+                            <td style="border: 1px solid #000; text-align: right; padding: 1px 4px;">{d['total_freight']:.2f}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">CGST (9%)</td>
+                            <td style="border: 1px solid #000; text-align: right; padding: 1px 4px;">{d['cgst']:.2f}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">SGST (9%)</td>
+                            <td style="border: 1px solid #000; text-align: right; padding: 1px 4px;">{d['sgst']:.2f}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">IGST</td>
+                            <td style="border: 1px solid #000; text-align: right; padding: 1px 4px;">{d['igst']:.2f}</td>
                         </tr>
                         <tr style="font-weight: bold; background: #eee;">
                             <td style="border: 1px solid #000; text-align: left; padding: 1px 4px;">GRAND TOTAL</td>
@@ -247,7 +297,7 @@ if 'lr_data' in st.session_state:
                 </div>
 
                 <div style="font-size: 9px; border-top: 1.5px solid #000; padding-top: 2px; margin-top: 1px; line-height: 1.2; font-weight: bold; text-align: justify;">
-                    <b>Navsari :-</b> 8000537847 &nbsp;|&nbsp; <b>Valsad :-</b> 6351700152 &nbsp;|&nbsp; <b>Vapi :-</b> 9427335518 &nbsp;|&nbsp; <b>Ankleshwar :-</b> 9978811411 &nbsp;|&nbsp; <b>Surat :-</b> 8467818918 &nbsp;|&nbsp; <b>Sarkhej Ahm. :-</b> 9427450535 &nbsp;|&nbsp; <b>Madhupura :-</b> 9173165886 &nbsp;|&nbsp; <b>Narol :-</b> 9427450535
+                    <b>Navsari :-</b> 7089093833 &nbsp;|&nbsp; <b>Valsad :-</b> 7A2B294826 &nbsp;|&nbsp; <b>Vapi :-</b> 9427335518 &nbsp;|&nbsp; <b>Bharuch :-</b> 9427587136 &nbsp;|&nbsp; <b>Ankleshwar :-</b> 9107587136 &nbsp;|&nbsp; <b>Surat :-</b> 8467818918 &nbsp;|&nbsp; <b>Chikhali :-</b> 7089093833 &nbsp;|&nbsp; <b>Sarkhej Amd. :-</b> 9427450535
                 </div>
             </div>
             <div style="border-bottom: 1px dashed #000; margin-top: 1px;"></div>
