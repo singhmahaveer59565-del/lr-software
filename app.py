@@ -80,30 +80,35 @@ with st.form("lr_form"):
         inv_no_val_wt = st.text_input("Invoice No. & Value | Weight Details", "")
 
     with col4:
-        st.markdown("<b>Detailed Amount Breakdown</b>", unsafe_allow_html=True)
-        basic_freight = st.number_input("Basic Freight", value=200.0)
-        value_surcharge = st.number_input("Value Surcharge (FOV)", value=0.0)
-        docket_charges = st.number_input("Docket Charges", value=0.0)
-        other_charges = st.number_input("Other Charges", value=0.0)
-        oda_charges = st.number_input("ODA Charges", value=0.0)
-        surcharges = st.number_input("Surcharges", value=0.0)
+        st.markdown("<b>Amount & GST Auto-Fill</b>", unsafe_allow_html=True)
         
-        total_freight = basic_freight + value_surcharge + docket_charges + other_charges + oda_charges + surcharges
+        # Seedha Grand Total likhne ka option
+        grand_total = st.number_input("Enter Grand Total (Total Amount)", value=236.0)
         
         gst_type = st.radio("GST Type", ["CGST + SGST (9% + 9%)", "IGST (18%)"], horizontal=True)
         
+        # Automatic Back-calculation for Freight and GST
         if "CGST" in gst_type:
+            # Grand Total = Basic Freight + 18% (9% + 9%) => Basic = Grand Total / 1.18
+            total_freight = round(grand_total / 1.18, 2)
             cgst = round(total_freight * 0.09, 2)
-            sgst = round(total_freight * 0.09, 2)
+            sgst = round(grand_total - total_freight - cgst, 2) # Adjustment for rounding match
             igst = 0.0
         else:
+            # Grand Total = Basic Freight + 18% IGST => Basic = Grand Total / 1.18
+            total_freight = round(grand_total / 1.18, 2)
             cgst = 0.0
             sgst = 0.0
-            igst = round(total_freight * 0.18, 2)
+            igst = round(grand_total - total_freight, 2)
             
-        grand_total = round(total_freight + cgst + sgst + igst, 2)
+        basic_freight = total_freight
+        value_surcharge = 0.0
+        docket_charges = 0.0
+        other_charges = 0.0
+        oda_charges = 0.0
+        surcharges = 0.0
         
-        st.info(f"💡 Calculated Grand Total: {grand_total}")
+        st.info(f"✨ Auto Calculated -> Basic Freight: {basic_freight} | CGST/SGST or IGST automatically adjusted.")
         
         pay_type = st.radio("Payment Status", ["Monthly Billing", "PAID", "TO PAY"], index=1)
 
