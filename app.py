@@ -101,37 +101,50 @@ if 'lr_data' in st.session_state:
 
         return f"""
         <div style="position: relative; margin-bottom: 2px;">
-            <div class="copy-box" style="border: 1.5px solid #000; padding: 2px 4px; background: #fff; font-family: Arial, sans-serif; box-sizing: border-box; height: 32.5vh; display: flex; flex-direction: column; justify-content: space-between;">
+            <div class="copy-box" style="border: 1.5px solid #000; padding: 3px 5px; background: #fff; font-family: Arial, sans-serif; box-sizing: border-box; height: 32.5vh; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <!-- Top Warning Bar -->
-                    <div style="background: #000; color: #fff; text-align: center; font-weight: bold; font-size: 11px; padding: 1px 0;">
+                    <!-- Top Gujarati Warning Bar -->
+                    <div style="background: #000; color: #fff; text-align: center; font-weight: bold; font-size: 11.5px; padding: 1.5px 0;">
                         કાચ, પ્લાસ્ટીક, ફાયબર અથવા લીક્વીડ માલ ડેમેજ અથવા લીક થાય તો તેની જવાબદારી કંપનીની રહેશે નહીં.
                     </div>
 
                     <!-- Header Table -->
-                    <table style="width: 100%; border-collapse: collapse; margin-top: 1px;">
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 2px;">
                         <tr>
-                            <td style="width: 48%; vertical-align: top;">
-                                <div style="font-size: 10.5px; color: #d32f2f; font-weight: bold; font-style: italic; font-family: 'Times New Roman', serif;">
-                                    Always on Time
+                            <td style="width: 50%; vertical-align: top;">
+                                <!-- Exact Horizontal Logo Styling -->
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <svg width="45" height="24" viewBox="0 0 60 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="2" y="10" width="30" height="15" fill="#333" />
+                                        <path d="M32 14L44 14L50 20L50 25L32 25Z" fill="#333" />
+                                        <circle cx="10" cy="26" r="4" fill="#000" stroke="#fff" stroke-width="1.5"/>
+                                        <circle cx="24" cy="26" r="4" fill="#000" stroke="#fff" stroke-width="1.5"/>
+                                        <circle cx="42" cy="26" r="4" fill="#000" stroke="#fff" stroke-width="1.5"/>
+                                        <line x1="6" y1="5" x2="35" y2="5" stroke="#333" stroke-width="2"/>
+                                    </svg>
+                                    <div>
+                                        <div style="font-size: 10.5px; color: #d32f2f; font-weight: bold; font-style: italic; font-family: 'Times New Roman', serif; line-height: 1;">
+                                            Always on Time
+                                        </div>
+                                        <div style="font-size: 20px; font-weight: 900; font-family: 'Georgia', 'Times New Roman', serif; letter-spacing: 0.5px; line-height: 1.1; white-space: nowrap;">
+                                            <span style="color: #d32f2f;">FORTUNE</span> <span style="color: #000;">EXPRESS CARGO</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div style="font-size: 19px; font-weight: 900; font-family: 'Arial Black', Impact, sans-serif; line-height: 1; white-space: nowrap;">
-                                    <span style="color: #d32f2f;">FORTUNE</span> <span style="color: #000;">EXPRESS CARGO</span>
-                                </div>
-                                <div style="font-size: 11px; line-height: 1.15; margin-top: 1px;">
+                                <div style="font-size: 11px; line-height: 1.2; margin-top: 2px;">
                                     <b>E-mail :</b> fortuneexpresscargo@gmail.com<br>
                                     <b>M. :</b> 9173165886<br>
                                     <b>Add :</b> 15, Bhagwan Estate, Opp. Ekta Hotel Lane, Aslali - 382427
                                 </div>
                             </td>
-                            <td style="width: 27%; vertical-align: top; text-align: center;">
-                                <div style="font-size: 11px; line-height: 1.2; text-align: left; display: inline-block;">
+                            <td style="width: 25%; vertical-align: top; text-align: center;">
+                                <div style="font-size: 11px; line-height: 1.25; text-align: left; display: inline-block;">
                                     <b>PAN No. :</b> AGVPM3701F<br>
                                     <b>GST No. :</b> 24AGVPM3701F2ZF<br>
                                     <b>SAC No. :</b> 9965
                                 </div>
-                                <div style="margin-top: 2px;">
-                                    <span style="border: 1.5px solid #000; padding: 2px 6px; border-radius: 8px; font-weight: bold; font-size: 11px; background: #fff; display: inline-block;">
+                                <div style="margin-top: 3px;">
+                                    <span style="border: 1.5px solid #000; padding: 2px 6px; border-radius: 6px; font-weight: bold; font-size: 11px; background: #fff; display: inline-block;">
                                         {copy_title}
                                     </span>
                                 </div>
@@ -139,27 +152,27 @@ if 'lr_data' in st.session_state:
                             <td style="width: 25%; vertical-align: top; text-align: center;">
                                 <div style="border: 1px solid #000; padding: 1px;">
                                     <div style="font-size: 10px; font-weight: bold; color: #333;">DOCKET NUMBER</div>
-                                    <div style="font-size: 19px; font-weight: bold; color: #d32f2f; line-height: 1;">{d['lr_no']}</div>
+                                    <div style="font-size: 20px; font-weight: bold; color: #d32f2f; line-height: 1;">{d['lr_no']}</div>
                                     <div style="font-size: 11px;"><b>DATE :</b> {d['date']}</div>
                                 </div>
                                 <table style="width: 100%; border: 1px solid #000; margin-top: 1px; font-size: 11px; text-align: left; border-collapse: collapse;">
-                                    <tr><td style="border: 1px solid #000; padding: 0px 3px;"><b>FROM :</b> {d['from']}</td></tr>
-                                    <tr><td style="border: 1px solid #000; padding: 0px 3px;"><b>TO :</b> {d['to']}</td></tr>
+                                    <tr><td style="border: 1px solid #000; padding: 1px 3px;"><b>FROM :</b> {d['from']}</td></tr>
+                                    <tr><td style="border: 1px solid #000; padding: 1px 3px;"><b>TO :</b> {d['to']}</td></tr>
                                 </table>
                             </td>
                         </tr>
                     </table>
 
                     <!-- Consignor & Consignee Table -->
-                    <table style="width: 100%; border-collapse: collapse; margin-top: 1px; border: 1px solid #000; font-size: 11px;">
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 2px; border: 1px solid #000; font-size: 11px;">
                         <tr>
-                            <td style="width: 50%; border: 1px solid #000; padding: 1px 3px; vertical-align: top; line-height: 1.15;">
+                            <td style="width: 50%; border: 1px solid #000; padding: 2px 4px; vertical-align: top; line-height: 1.2;">
                                 <b>CONSIGNOR DETAILS (PLACE OF SUPPLY)</b><br>
                                 NAME : {d['consignor']}<br>
                                 GST NO. : {d['consignor_gst']}<br>
                                 CONTACT NO. : {d['consignor_contact']}
                             </td>
-                            <td style="width: 50%; border: 1px solid #000; padding: 1px 3px; vertical-align: top; line-height: 1.15;">
+                            <td style="width: 50%; border: 1px solid #000; padding: 2px 4px; vertical-align: top; line-height: 1.2;">
                                 <b>CONSIGNEE DETAILS (DELIVERY DESTINATION)</b><br>
                                 NAME : {d['consignee']}<br>
                                 GST NO. : {d['consignee_gst']}<br>
@@ -170,18 +183,18 @@ if 'lr_data' in st.session_state:
                     </table>
 
                     <!-- Package & Payment Details Grid -->
-                    <table style="width: 100%; border-collapse: collapse; margin-top: 1px; border: 1px solid #000; font-size: 10.5px; text-align: center;">
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 2px; border: 1px solid #000; font-size: 10.5px; text-align: center;">
                         <tr style="font-weight: bold; background: #f2f2f2;">
-                            <td style="border: 1px solid #000; width: 45%; padding: 0px;" colspan="3">PACKAGE INFORMATION</td>
-                            <td style="border: 1px solid #000; width: 25%; padding: 0px;" colspan="2">IN RUPEES</td>
+                            <td style="border: 1px solid #000; width: 45%; padding: 1px;" colspan="3">PACKAGE INFORMATION</td>
+                            <td style="border: 1px solid #000; width: 25%; padding: 1px;" colspan="2">IN RUPEES</td>
                             <td style="border: 1px solid #000; width: 10%;">Monthly Billing</td>
                             <td style="border: 1px solid #000; width: 10%;">PAID</td>
                             <td style="border: 1px solid #000; width: 10%;">TO PAY</td>
                         </tr>
                         <tr>
-                            <td style="border: 1px solid #000; padding: 0px; width: 20%;">{d['pkg_type']}</td>
-                            <td style="border: 1px solid #000; padding: 0px; width: 15%;">{d['no_pkg']}</td>
-                            <td style="border: 1px solid #000; padding: 0px; width: 10%;">{d['volume']}</td>
+                            <td style="border: 1px solid #000; padding: 1px; width: 20%;">{d['pkg_type']}</td>
+                            <td style="border: 1px solid #000; padding: 1px; width: 15%;">{d['no_pkg']}</td>
+                            <td style="border: 1px solid #000; padding: 1px; width: 10%;">{d['volume']}</td>
                             <td style="border: 1px solid #000; text-align: left; padding: 0px 3px;">BASIC FREIGHT</td>
                             <td style="border: 1px solid #000; text-align: right; padding: 0px 3px;">{d['basic_freight']:.2f}</td>
                             <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 28px; color: #008000; font-weight: 900;" rowspan="11">{billing_mark}</td>
@@ -189,7 +202,7 @@ if 'lr_data' in st.session_state:
                             <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 28px; color: #008000; font-weight: 900;" rowspan="11">{topay_mark}</td>
                         </tr>
                         <tr>
-                            <td style="border: 1px solid #000; padding: 1px 3px; text-align: left;" colspan="3" rowspan="10" vertical-align="top">
+                            <td style="border: 1px solid #000; padding: 2px 4px; text-align: left;" colspan="3" rowspan="10" vertical-align="top">
                                 <b>GOODS DESCRIPTION :</b> {d['goods_desc']}<br>
                                 <b>NO OF PACKAGES :</b> {d['no_pkg']}
                             </td>
@@ -235,18 +248,18 @@ if 'lr_data' in st.session_state:
                     </table>
 
                     <!-- Invoice Details Row -->
-                    <div style="border: 1px solid #000; margin-top: 1px; padding: 1px 3px; font-size: 10.5px;">
+                    <div style="border: 1px solid #000; margin-top: 1px; padding: 1px 3px; font-size: 11px;">
                         <b>INVOICE NO. & VALUE | WEIGHT DETAILS :-</b> {d['inv_no_val_wt']}
                     </div>
 
-                    <!-- Terms & Conditions Gujarati Text -->
-                    <div style="font-size: 8px; margin-top: 1px; text-align: justify; line-height: 1.05; color: #111;">
+                    <!-- Terms & Conditions Gujarati Text (Larger & Prominent) -->
+                    <div style="font-size: 9px; margin-top: 1px; text-align: justify; line-height: 1.15; color: #000; font-weight: 500;">
                         (૧) પેક દાગીનામાં રહેલા માલ માટેની બીલ અથવા પરમીટ કે E-way bill ની સંપૂર્ણ જવાબદારી ગ્રાહકની રહેશે. (૨) આગ, ચોરી, વરસાદ, અકસ્માત, હુલ્લડ વગેરે અણધાર્યા સંજોગોમાં માલને કોઈપણ નુકશાન થશે તો કંપનીની જવાબદારી રહેશે નહીં. (૩) માલ અંગેની કોઈપણ જાતની ફરીયાદ હશે તો ૧૦ દિવસની અંદર શરુ કરવી. (૪) કોઈપણ કારાણસર ગવર્નમેન્ટ ઓથોરીટી માલ અટકાવશે, જપ્ત કરશે તો કંપની જવાબદાર રહેશે નહીં. The Company is not responsible for Breakage, Leakage, Damage, Shortage in pack Cantoos/Cases/Boxes/Bags of Goods.
                     </div>
                 </div>
 
                 <!-- Footer Branch Phones -->
-                <div style="font-size: 9px; border-top: 1.5px solid #000; padding-top: 1px; margin-top: 1px; line-height: 1.1; font-weight: bold;">
+                <div style="font-size: 9.5px; border-top: 1.5px solid #000; padding-top: 1px; margin-top: 1px; line-height: 1.15; font-weight: bold;">
                     <b>Navsari :</b> 70B9093833 | <b>Valsad :</b> 7A2B294826 | <b>Vapi :</b> 9427335518 | <b>Bharuch :</b> 9427587136 | <b>Ankleshwar :</b> 9107587136 | <b>Surat :</b> 8467818918 | <b>Chikhali :</b> 70B9093834 | <b>Sarkhej Amd. :</b> 9427450535
                 </div>
             </div>
