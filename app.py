@@ -100,7 +100,7 @@ if 'lr_data' in st.session_state:
         billing_mark = "✔" if d['pay_type'] == "Monthly Billing" else ""
 
         return f"""
-        <div style="position: relative; margin-bottom: 8px;">
+        <div style="position: relative; margin-bottom: 6px;">
             <div class="copy-box" style="border: 1.5px solid #000; padding: 4px 6px; background: #fff; font-family: Arial, sans-serif; font-size: 8.5px; box-sizing: border-box; height: 32vh; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
                     <!-- Top Warning Bar -->
@@ -111,18 +111,20 @@ if 'lr_data' in st.session_state:
                     <!-- Header Table -->
                     <table style="width: 100%; border-collapse: collapse;">
                         <tr>
-                            <td style="width: 45%; vertical-align: top;">
-                                <div style="font-size: 15px; font-weight: bold; font-family: Arial, sans-serif; color: #000; line-height: 1.1;">
-                                    FORTUNE EXPRESS CARGO
+                            <td style="width: 48%; vertical-align: top;">
+                                <div style="font-size: 7.5px; color: #d32f2f; font-weight: bold; font-style: italic; font-family: 'Times New Roman', serif; margin-bottom: -1px;">
+                                    Always on Time
                                 </div>
-                                <div style="font-size: 7px; color: #555; margin-bottom: 2px;">Always on Time</div>
-                                <div style="font-size: 8px; line-height: 1.2;">
+                                <div style="font-size: 15px; font-weight: 900; font-family: 'Arial Black', Impact, sans-serif; line-height: 1.1; white-space: nowrap;">
+                                    <span style="color: #d32f2f;">FORTUNE</span> <span style="color: #000;">EXPRESS CARGO</span>
+                                </div>
+                                <div style="font-size: 8px; line-height: 1.2; margin-top: 2px;">
                                     <b>E-mail :</b> fortuneexpresscargo@gmail.com<br>
                                     <b>M. :</b> 9173165886<br>
                                     <b>Add :</b> 15, Bhagwan Estate, Opp. Ekta Hotel Lane, Aslali - 382427
                                 </div>
                             </td>
-                            <td style="width: 30%; vertical-align: top; text-align: center;">
+                            <td style="width: 27%; vertical-align: top; text-align: center;">
                                 <div style="font-size: 8px; line-height: 1.2; text-align: left; display: inline-block;">
                                     <b>PAN No. :</b> AGVPM3701F<br>
                                     <b>GST No. :</b> 24AGVPM3701F2ZF<br>
@@ -182,9 +184,10 @@ if 'lr_data' in st.session_state:
                             <td style="border: 1px solid #000; padding: 2px; width: 10%;">{d['volume']}</td>
                             <td style="border: 1px solid #000; text-align: left; padding: 2px 4px;">BASIC FREIGHT</td>
                             <td style="border: 1px solid #000; text-align: right; padding: 2px 4px;">{d['basic_freight']:.2f}</td>
-                            <td style="border: 1px solid #000; vertical-align: middle; font-size: 12px; color: green; font-weight: bold;" rowspan="11">{billing_mark}</td>
-                            <td style="border: 1px solid #000; vertical-align: middle; font-size: 12px; color: green; font-weight: bold;" rowspan="11">{paid_mark}</td>
-                            <td style="border: 1px solid #000; vertical-align: middle; font-size: 12px; color: green; font-weight: bold;" rowspan="11">{topay_mark}</td>
+                            <!-- BIG GREEN CHECKMARK -->
+                            <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 24px; color: #008000; font-weight: 900;" rowspan="11">{billing_mark}</td>
+                            <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 24px; color: #008000; font-weight: 900;" rowspan="11">{paid_mark}</td>
+                            <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 24px; color: #008000; font-weight: 900;" rowspan="11">{topay_mark}</td>
                         </tr>
                         <tr>
                             <td style="border: 1px solid #000; padding: 2px; text-align: left;" colspan="3" rowspan="10" vertical-align="top">
@@ -244,7 +247,7 @@ if 'lr_data' in st.session_state:
                 </div>
 
                 <!-- Footer Branch Phones -->
-                <div style="font-size: 6.5px; border-top: 1px solid #000; padding-top: 2px; margin-top: 1px; line-height: 1.1;">
+                <div style="font-size: 7.5px; border-top: 1.5px solid #000; padding-top: 2px; margin-top: 2px; line-height: 1.2; font-weight: 500;">
                     <b>Navsari :</b> 70B9093833 | <b>Valsad :</b> 7A2B294826 | <b>Vapi :</b> 9427335518 | <b>Bharuch :</b> 9427587136 | <b>Ankleshwar :</b> 9107587136 | <b>Surat :</b> 8467818918 | <b>Chikhali :</b> 70B9093834 | <b>Sarkhej Amd. :</b> 9427450535
                 </div>
             </div>
@@ -268,7 +271,7 @@ if 'lr_data' in st.session_state:
                 padding: 0 !important;
                 overflow: hidden !important;
             }}
-            .print-btn {{
+            .print-btn-container {{
                 display: none !important;
             }}
             .copy-box {{
@@ -279,9 +282,12 @@ if 'lr_data' in st.session_state:
     </style>
     </head>
     <body style="margin:0; padding:0; background:#fff;">
-        <div style="text-align: center; margin-bottom: 8px;" class="print-btn">
-            <button onclick="window.print()" style="background-color: #007bff; color: white; padding: 10px 20px; border: none; font-size: 15px; font-weight: bold; border-radius: 4px; cursor: pointer;">
-                🖨️ PRINT ALL 3 COPIES (EXACT ORIGINAL FIT)
+        <div style="text-align: center; margin-bottom: 10px; display: flex; justify-content: center; gap: 12px;" class="print-btn-container">
+            <button onclick="window.print()" style="background-color: #007bff; color: white; padding: 10px 20px; border: none; font-size: 14px; font-weight: bold; border-radius: 4px; cursor: pointer;">
+                🖨️ PRINT ALL 3 COPIES
+            </button>
+            <button onclick="window.print()" style="background-color: #28a745; color: white; padding: 10px 20px; border: none; font-size: 14px; font-weight: bold; border-radius: 4px; cursor: pointer;">
+                📥 DOWNLOAD PDF (SAVE AS PDF)
             </button>
         </div>
         <div>
