@@ -24,29 +24,30 @@ with st.form("lr_form"):
     with col1:
         lr_no = st.number_input("LR Number / Docket Number", value=next_lr)
         date = st.date_input("Date", datetime.now())
-        consignor = st.text_input("Consignor Name (Place of Supply)", 
-        consignor_gst = st.text_input("Consignor GST", 
+        consignor = st.text_input("Consignor Name (Place of Supply)", "IFFCO - MC CROP SCIENCE PVT LTD")
+        consignor_gst = st.text_input("Consignor GST", "24AADCI9008G1ZR")
         consignor_contact = st.text_input("Consignor Contact / Pincode", "")
         from_place = st.text_input("From", "Aslali")
         
     with col2:
-        consignee = st.text_input("Consignee Name (Delivery Destination)", 
+        consignee = st.text_input("Consignee Name (Delivery Destination)", "VALSAD VIBHAG FARMER")
         consignee_gst = st.text_input("Consignee GST", "")
         consignee_contact = st.text_input("Consignee Contact", "")
         to_place = st.text_input("To", "Valsad")
-        instruction = st.text_input("Instruction", "Handle with Care 
+        instruction = st.text_input("Instruction", "Handle with Care (Pesticides)")
         
     st.markdown("---")
     col3, col4 = st.columns(2)
     
     with col3:
-        pkg_type = st.text_input("Type of Packaging", 
-        no_pkg = st.text_input("No. of Packages", 
-        goods_desc = st.text_input("Goods Description", 
-        inv_no_val_wt = st.text_input("Invoice No. & Value | 
+        pkg_type = st.text_input("Type of Packaging", "BOX (Pesticides)")
+        no_pkg = st.text_input("No. of Packages", "3 BOXES")
+        volume = st.text_input("Volume (Inch)", "-")
+        goods_desc = st.text_input("Goods Description", "PESTICIDES")
+        inv_no_val_wt = st.text_input("Invoice No. & Value | Weight Details", "")
 
     with col4:
-        basic_freight = st.number_input("Basic Freight", value=0.0)
+        basic_freight = st.number_input("Basic Freight", value=200.39)
         val_surcharge = st.number_input("Value Surcharge (FOV)", value=0.0)
         docket_chg = st.number_input("Docket Charges", value=0.0)
         other_chg = st.number_input("Other Charges", value=0.0)
@@ -259,7 +260,7 @@ if 'lr_data' in st.session_state:
 
                 <!-- Footer Branch Phones -->
                 <div style="font-size: 9.5px; border-top: 1.5px solid #000; padding-top: 1px; margin-top: 1px; line-height: 1.15; font-weight: bold;">
-                    <b>Navsari :</b> 8000537847 | <b>Valsad :</b> 6351700152 | <b>Vapi :</b> 9427335518 |  | <b>Ankleshwar :</b> 9978811411 | <b>Surat :</b> 8467818918 | | <b>Sarkhej Amd. :</b> 9427450535
+                    <b>Navsari :</b> 70B9093833 | <b>Valsad :</b> 7A2B294826 | <b>Vapi :</b> 9427335518 | <b>Bharuch :</b> 9427587136 | <b>Ankleshwar :</b> 9107587136 | <b>Surat :</b> 8467818918 | <b>Chikhali :</b> 70B9093834 | <b>Sarkhej Amd. :</b> 9427450535
                 </div>
             </div>
             <div style="border-bottom: 1px dashed #000; margin-top: 1px;"></div>
