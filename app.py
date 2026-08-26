@@ -8,23 +8,39 @@ st.set_page_config(page_title="Fortune Express Cargo - LR Generator", layout="wi
 DATA_FILE = "lr_database.csv"
 PARTY_FILE = "party_database.csv"
 
-# Initialize Databases with correct columns
-if not os.path.exists(DATA_FILE):
-    df_init = pd.DataFrame(columns=[
+# Safely initialize or reset corrupted databases
+if os.path.exists(DATA_FILE):
+    try:
+        df = pd.read_csv(DATA_FILE)
+    except Exception:
+        os.remove(DATA_FILE)
+        df = pd.DataFrame(columns=[
+            "LR_No", "Date", "Consignor", "Consignor_GST", "Consignor_Contact", 
+            "Consignee", "Consignee_GST", "Consignee_Contact", "From", "To", 
+            "Packages", "Goods", "Grand_Total", "Pay_Type"
+        ])
+        df.to_csv(DATA_FILE, index=False)
+else:
+    df = pd.DataFrame(columns=[
         "LR_No", "Date", "Consignor", "Consignor_GST", "Consignor_Contact", 
         "Consignee", "Consignee_GST", "Consignee_Contact", "From", "To", 
         "Packages", "Goods", "Grand_Total", "Pay_Type"
     ])
-    df_init.to_csv(DATA_FILE, index=False)
+    df.to_csv(DATA_FILE, index=False)
 
-if not os.path.exists(PARTY_FILE):
-    df_party_init = pd.DataFrame(columns=["Name", "GST", "Contact"])
-    df_party_init.to_csv(PARTY_FILE, index=False)
+if os.path.exists(PARTY_FILE):
+    try:
+        df_party = pd.read_csv(PARTY_FILE)
+    except Exception:
+        os.remove(PARTY_FILE)
+        df_party = pd.DataFrame(columns=["Name", "GST", "Contact"])
+        df_party.to_csv(PARTY_FILE, index=False)
+else:
+    df_party = pd.DataFrame(columns=["Name", "GST", "Contact"])
+    df_party.to_csv(PARTY_FILE, index=False)
 
 st.title("🚛 FORTUNE EXPRESS CARGO - LR GENERATOR")
 
-df = pd.read_csv(DATA_FILE)
-df_party = pd.read_csv(PARTY_FILE)
 next_lr = 3901 if df.empty else int(df["LR_No"].max()) + 1
 
 st.subheader("નવી LR એન્ટ્રી કરો (Create New LR)")
@@ -284,4 +300,7 @@ if 'lr_data' in st.session_state:
 
 st.markdown("---")
 st.subheader("📊 જુનો બધો ડેટા (Saved LR History)")
-st.dataframe(pd.read_csv(DATA_FILE), use_container_width=True)
+if not df.empty:
+    st.dataframe(df, use_container_width=True)
+else:
+    st.info("No saved records found yet.")
