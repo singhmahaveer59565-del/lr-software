@@ -103,14 +103,11 @@ if 'lr_data' in st.session_state:
         billing_mark = "✔" if d['pay_type'] == "Monthly Billing" else ""
 
         return f"""
-        <div class="print-lr-box" style="border: 2px solid #000; padding: 4px; margin-bottom: 20px; background: #fff; font-family: Arial, sans-serif; font-size: 10px; page-break-after: always;">
-            
-            <!-- TOP NOTICE -->
+        <div style="border: 2px solid #000; padding: 4px; margin-bottom: 20px; background: #fff; font-family: Arial, sans-serif; font-size: 10px; page-break-after: always;">
             <div style="background: #000; color: #fff; text-align: center; font-weight: bold; font-size: 9px; padding: 2px 0;">
                 કાચ, પ્લાસ્ટીક, ફાયબર અથવા લીક્વીડ માલ ડેમેજ અથવા લીક થાય તો તેની જવાબદારી કંપનીની રહેશે નહીં.
             </div>
 
-            <!-- HEADER AREA -->
             <table style="width: 100%; border-collapse: collapse; margin-top: 2px;">
                 <tr>
                     <td style="width: 45%; vertical-align: top;">
@@ -140,7 +137,6 @@ if 'lr_data' in st.session_state:
                 </tr>
             </table>
 
-            <!-- CONSIGNOR & CONSIGNEE DETAILS -->
             <table style="width: 100%; border-collapse: collapse; margin-top: 2px; border: 1px solid #000; font-size: 9px;">
                 <tr>
                     <td style="width: 50%; border: 1px solid #000; padding: 2px; vertical-align: top;">
@@ -158,7 +154,6 @@ if 'lr_data' in st.session_state:
                 </tr>
             </table>
 
-            <!-- MAIN TABLE -->
             <table style="width: 100%; border-collapse: collapse; margin-top: 2px; border: 1px solid #000; font-size: 8px; text-align: center;">
                 <tr style="background: #e0e0e0; font-weight: bold;">
                     <td style="border: 1px solid #000; width: 35%;" colspan="4">PACKAGE INFORMATION</td>
@@ -234,7 +229,6 @@ if 'lr_data' in st.session_state:
                 </tr>
             </table>
 
-            <!-- BRANCH PHONE NUMBERS TABLE -->
             <table style="width: 100%; border-collapse: collapse; margin-top: 2px; border: 1px solid #000; font-size: 7.5px; text-align: center;">
                 <tr>
                     <td style="border: 1px solid #000; font-weight: bold;">Navsari :-</td>
@@ -258,12 +252,10 @@ if 'lr_data' in st.session_state:
                 </tr>
             </table>
 
-            <!-- TERMS & CONDITIONS -->
             <div style="font-size: 7px; margin-top: 2px; text-align: justify; line-height: 1.1;">
                 (૧) પેક દાગીનામાં રહેલા માલ માટેની બીલ અથવા પરમીટ કે E-way bill ની સંપૂર્ણ જવાબદારી ગ્રાહકની રહેશે (પેક દાગીના ના અંદર ગુમથી માલ આવશે તો સંપૂર્ણ જવાબદારી ગ્રાહકની રહેશે). (૨) આગ, ચોરી, વરસાદ, અકસ્માત, હુલ્લડ વગેરે અણધાર્યા સંજોગોમાં માલને કોઈપણ નુકશાન થશે તો કંપનીની જવાબદારી રહેશે નહીં, તે બદલ ગ્રાહકે પોતાના માલનું નુકશાન મેળવવા માટે વીમો ઉતરાવી લેવો શરતી છે. (૩) માલ અંગેની કોઈપણ જાતની ફરીયાદ હશે તો ૧૦ દિવસની અંદર શરુ કરવી, ત્યારબાદ કોઈપણ જાતની કમ્પ્લેન ચાલશે નહીં. (૪) કોઈપણ કારાણસર ગવર્નમેન્ટ ઓથોરીટી માલ અટકાવશે, જપ્ત કરશે તો કંપની જવાબદાર રહેશે નહીં. (૫) માલ પહોંચ્યા આપ્યા ન હોય તો માલ ઉપર લીયન રહેશે. તૈયાર મુકવો નો માલ લેવાનો ના પાડે તો લાવવા, લઇ જવા અને સ્ટોર કરવાનો ચાર્જ લાગશે તે પુરેપુરી રકમ ભરપાઈ કરવી. માલ જીએસટી આપવા/બતાવવો અમોએ જીએસટી કે ક્રોસ ભરેલો હોય તો તે વ્યાજસહિત બાંધનકર્તા રહેશે. (૬) ન્યાયનું ક્ષેત્ર વાપી રહેશે.
             </div>
 
-            <!-- FOOTER SIGNATURE -->
             <table style="width: 100%; margin-top: 5px; font-size: 8px;">
                 <tr>
                     <td style="width: 60%;">CUSTOMER SIGN: _______________________</td>
@@ -278,32 +270,18 @@ if 'lr_data' in st.session_state:
         """
 
     full_html = f"""
-    <style>
-        @media print {{
-            body * {{
-                visibility: hidden;
-            }}
-            .print-area, .print-area * {{
-                visibility: visible;
-            }}
-            .print-area {{
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-            }}
-        }}
-    </style>
-    <div class="print-area">
-        {get_receipt_html("CONSIGNOR COPY")}
-        {get_receipt_html("CONSIGNEE COPY")}
-        {get_receipt_html("DRIVER COPY")}
+    <div style="text-align: center; margin-bottom: 15px;">
+        <button onclick="window.print()" style="background-color: #008CBA; color: white; padding: 12px 25px; border: none; font-size: 16px; font-weight: bold; border-radius: 5px; cursor: pointer;">
+            🖨️ PRINT THIS LR (PDF)
+        </button>
     </div>
+    {get_receipt_html("CONSIGNOR COPY")}
+    {get_receipt_html("CONSIGNEE COPY")}
+    {get_receipt_html("DRIVER COPY")}
     """
 
     st.markdown("---")
-    st.components.v1.html(full_html, height=1300, scrolling=True)
-    st.info("💡 **Print કે PDF માટે Ctrl + P દબાવો!**")
+    st.components.v1.html(full_html, height=1350, scrolling=True)
 
 st.markdown("---")
 st.subheader("📊 જુનો બધો ડેટા (Saved LR History)")
