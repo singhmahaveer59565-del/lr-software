@@ -167,7 +167,7 @@ if 'lr_data' in st.session_state:
                                 </div>
                             </div>
                             <div style="font-size: 8.5px; line-height: 1.1; margin-top: 2px; text-transform: uppercase;">
-                                <b>E-MAIL :</b> FORTUNEEXPRESSCARGO@GMAIL.COM | <b style="color:#d32f2f; font-size:9.5px;">M.: 9173165886</b><br>
+                                <b>E-MAIL :</b> FORTUNEEXPRESSCARGO@GMAIL.COM | <b style="color:#d32f2f; font-size:9.5px;">M.: 9427450535</b><br>
                                 <b>ADD :</b> 15, BHAGWAN ESTATE, OPP. EKTA HOTEL LANE, ASLALI - 382427
                             </div>
                         </td>
