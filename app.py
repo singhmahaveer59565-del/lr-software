@@ -162,7 +162,7 @@ if 'lr_data' in st.session_state:
                                 <div style="font-size: 9.5px; color: #d32f2f; font-weight: bold; font-style: italic; font-family: 'Times New Roman', serif; line-height: 1;">
                                     Always on Time
                                 </div>
-                                <div style="font-size: 15px; font-weight: 900; font-family: 'Georgia', 'Times New Roman', serif; letter-spacing: 0.5px; line-height: 1.1; white-space: nowrap;">
+                                <div style="font-size: 17px; font-weight: 900; font-family: 'Georgia', 'Times New Roman', serif; letter-spacing: 1px; line-height: 1.1; white-space: nowrap; width: 100%;">
                                     <span style="color: #d32f2f;">FORTUNE</span> <span style="color: #000;">EXPRESS CARGO</span>
                                 </div>
                             </div>
@@ -287,7 +287,7 @@ if 'lr_data' in st.session_state:
             </div>
 
             <div style="font-size: 8px; border-top: 1px solid #000; padding-top: 1.5px; margin-top: 2px; line-height: 1.1; font-weight: bold; text-align: justify;">
-                NAVSARI :- 8000537847 &nbsp;|&nbsp; VALSAD :- 6351700152 &nbsp;|&nbsp; VAPI :- 9427335518 &nbsp;|&nbsp; ANKLESHWAR :- 9978811411 &nbsp;|&nbsp; SURAT :- 8467818918 &nbsp;|&nbsp; SARKHEJ. :- 9427450535 &nbsp;|&nbsp; MADHUPURA :- 9173165886 &nbsp;|&nbsp; NAROL :- 9427450535
+                Navsari :- 8000537847 &nbsp;|&nbsp; Valsad :- 6351700152 &nbsp;|&nbsp; Vapi :- 9427335518 &nbsp;|&nbsp; Ankleshwar :- 9978811411 &nbsp;|&nbsp; Surat :- 8467818918 &nbsp;|&nbsp; Sarkhej Ahm. :- 9427450535 &nbsp;|&nbsp; Madhupura :- 9173165886 &nbsp;|&nbsp; Narol :- 9427450535
             </div>
         </div>
         """
@@ -328,9 +328,9 @@ if 'lr_data' in st.session_state:
             </button>
         </div>
         <div>
-            {get_receipt_html("CONSIGNOR COPY")}
-            {get_receipt_html("CONSIGNEE COPY")}
-            {get_receipt_html("OFFICE COPY")}
+            {get_receipt_html("CONSIGNOR COPY (કોન્સાઈનર કોપી)")}
+            {get_receipt_html("CONSIGNEE COPY (કોન્સાઈની કોપી)")}
+            {get_receipt_html("DRIVER COPY (ડ્રાઈવર કોપી)")}
         </div>
     </body>
     </html>
@@ -340,8 +340,16 @@ if 'lr_data' in st.session_state:
     st.components.v1.html(full_html, height=1150, scrolling=True)
 
 st.markdown("---")
-st.subheader("📊 જુનો બધો ડેટા (Saved LR History)")
+st.subheader("📊 જુનો બધો ડેટા (Saved LR History & Backup)")
 if not df.empty:
+    # Add Download Backup Button
+    csv_data = df.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="📥 Download All LR Data (Excel Backup)",
+        data=csv_data,
+        file_name=f"fortune_lr_backup_{datetime.now().strftime('%d-%m-%Y')}.csv",
+        mime="text/csv",
+    )
     st.dataframe(df, use_container_width=True)
 else:
     st.info("No saved records found yet.")
