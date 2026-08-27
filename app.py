@@ -166,7 +166,7 @@ if 'lr_data' in st.session_state:
                             </div>
                             <div style="font-size: 7px; line-height: 1.05; margin-top: 1.5px; text-transform: uppercase;">
                                 <b>E-MAIL :</b> FORTUNEEXPRESSCARGO@GMAIL.COM | <b style="color:#d32f2f; font-size:8px;">M.: 9173165886</b><br>
-                                <b>ADD :</b> 15, BHAGWAN ESTATE, OPP. EKTA HOTEL LiNE, ASLALI - 382427
+                                <b>ADD :</b> 15, BHAGWAN ESTATE, OPP. EKTA HOTEL LANE, ASLALI - 382427
                             </div>
                         </td>
                         <td style="width: 27%; vertical-align: top; text-align: center; padding: 0 2px;">
@@ -279,7 +279,7 @@ if 'lr_data' in st.session_state:
                     <b>INVOICE NO. & VALUE | WEIGHT DETAILS :-</b> {d['inv_no_val_wt']}
                 </div>
 
-                <div style="font-size: 5.5px; margin-top: 1.5px; text-align: justify; line-height: 1; color: #000; font-weight: 600;">
+                <div style="font-size: 7px; margin-top: 2px; text-align: justify; line-height: 1.15; color: #000; font-weight: 600;">
                     (૧) પેક દાગીનામાં રહેલા માલ માટેની પરમીટ સંબંધી અગર ગુનાહિત માલ માટેની જવાબદારી કંપનીની રહેશે નહીં. (૨) આગ, ચોરી, વરસાદ, અકસ્માત, હુલ્લડ, હડતાલ વગેરે અણધાર્યા સંજોગોમાં માલને કોઈપણ નુકશાન થશે તો કંપનીની જવાબદારી રહેશે નહીં. (૩) ગ્રાહક પોતાના માલનું નુકશાન રોકવા માટે વીમો ઉતરાવી લેવો જરૂરી છે. (૪) માલ અંગેની કોઈપણ જાતની ફરીયાદ હોય તો સાત દિવસની અંદર કંપનીને જાણ કરવી. ત્યારબાદ કોઈપણ જાતની કમ્પ્લેન ચાલે નહીં. (૫) કોઈપણ કારણસર ગવર્નમેન્ટ ઓથોરીટી માલ અટકાવશે, જપ્ત કરશે તો કંપની જવાબદાર રહેશે નહીં. (૬) જો ભાડું પહેલેથી ન હોય તો માલ ઉપર લીયન રહેશે. લેનાર કંપની જો માલ લેવાની ના પાડશે તો લાવવા, લઇ જવા અને સ્ટોર કરવાની થઈ લાગશે તે પૂરેપૂરી રકમ ભરપાઈ કરશે માલ ફૂટી કટી આપવાબંધનરહેશે. (૭) અમોએ શરત જે કાંઈ ભરેલી હોય તે વ્યાપારીને બંધનકર્તા રહેશે. (૮) ન્યાયનું કેન્દ્ર વાપી રહેશે. The Company is not responsible for Breakage, Leakage, Damage, Shortage in pack Cartoon/Case/Box/Bags of Goods.
                 </div>
             </div>
