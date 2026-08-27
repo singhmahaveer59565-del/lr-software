@@ -167,7 +167,7 @@ if 'lr_data' in st.session_state:
                                 </div>
                             </div>
                             <div style="font-size: 8.5px; line-height: 1.1; margin-top: 2px; text-transform: uppercase;">
-                                <b>E-MAIL :</b> FORTUNEEXPRESSCARGO@GMAIL.COM | <b style="color:#d32f2f; font-size:9.5px;">M.: 9427450535</b><br>
+                                <b>E-MAIL :</b> FORTUNEEXPRESSCARGO@GMAIL.COM | <b style="color:#d32f2f; font-size:9.5px;">M.: 9173165886</b><br>
                                 <b>ADD :</b> 15, BHAGWAN ESTATE, OPP. EKTA HOTEL LANE, ASLALI - 382427
                             </div>
                         </td>
@@ -328,9 +328,9 @@ if 'lr_data' in st.session_state:
             </button>
         </div>
         <div>
-            {get_receipt_html("CONSIGNOR COPY (કોન્સાઈનર કોપી)")}
-            {get_receipt_html("CONSIGNEE COPY (કોન્સાઈની કોપી)")}
-            {get_receipt_html("DRIVER COPY (ડ્રાઈવર કોપી)")}
+            {get_receipt_html("CONSIGNOR COPY")}
+            {get_receipt_html("CONSIGNEE COPY")}
+            {get_receipt_html("OFFICE COPY")}
         </div>
     </body>
     </html>
