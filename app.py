@@ -162,8 +162,8 @@ if 'lr_data' in st.session_state:
                                 <div style="font-size: 9.5px; color: #d32f2f; font-weight: bold; font-style: italic; font-family: 'Times New Roman', serif; line-height: 1;">
                                     Always on Time
                                 </div>
-                                <div style="font-size: 15.5px; font-weight: 900; font-family: 'Georgia', 'Times New Roman', serif; letter-spacing: 0.5px; line-height: 1.1; white-space: nowrap; width: 100%; display: inline-block;">
-                                    <span style="color: #d32f2f;">FORTUNE</span> <span style="color: #000;">EXPRESS CARGO</span>
+                                <div style="font-size: 16px; font-weight: 900; font-family: 'Georgia', 'Times New Roman', serif; letter-spacing: 2.5px; line-height: 1.1; white-space: nowrap; width: 100%;">
+                                    <span style="color: #d32f2f;">FORTUNE</span> <span style="color: #000;">EXPRESS</span> <span style="color: #000;">CARGO</span>
                                 </div>
                             </div>
                             <div style="font-size: 8.5px; line-height: 1.1; margin-top: 2px; text-transform: uppercase;">
@@ -352,4 +352,3 @@ if not df.empty:
     st.dataframe(df, use_container_width=True)
 else:
     st.info("No saved records found yet.")
-
