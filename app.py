@@ -162,10 +162,8 @@ if 'lr_data' in st.session_state:
                                 <div style="font-size: 9.5px; color: #d32f2f; font-weight: bold; font-style: italic; font-family: 'Times New Roman', serif; line-height: 1;">
                                     Always on Time
                                 </div>
-                                <div style="font-size: 19px; font-weight: 900; font-family: 'Georgia', 'Times New Roman', serif; line-height: 1.1; width: 100%; display: flex; justify-content: space-between; align-items: baseline;">
-                                    <span style="color: #d32f2f; letter-spacing: 0.5px;">FORTUNE</span> 
-                                    <span style="color: #000; letter-spacing: 0.5px;">EXPRESS</span> 
-                                    <span style="color: #000; letter-spacing: 0.5px;">CARGO</span>
+                                <div style="font-size: 15px; font-weight: 900; font-family: 'Georgia', 'Times New Roman', serif; letter-spacing: 0.5px; line-height: 1.1; white-space: nowrap;">
+                                    <span style="color: #d32f2f;">FORTUNE</span> <span style="color: #000;">EXPRESS CARGO</span>
                                 </div>
                             </div>
                             <div style="font-size: 8.5px; line-height: 1.1; margin-top: 2px; text-transform: uppercase;">
