@@ -143,77 +143,67 @@ if 'lr_data' in st.session_state:
     d = st.session_state['lr_data']
 
     def get_receipt_html(copy_title):
-        paid_mark = "✔" if d['pay_type'] == "PAID" else "<span style='font-family: \"Caveat\", \"Brush Script MT\", cursive; font-size: 14px; color: #444;'>❌</span>"
-        topay_mark = "✔" if d['pay_type'] == "TO PAY" else "<span style='font-family: \"Caveat\", \"Brush Script MT\", cursive; font-size: 14px; color: #444;'>❌</span>"
-        billing_mark = "✔" if d['pay_type'] == "Monthly Billing" else "<span style='font-family: \"Caveat\", \"Brush Script MT\", cursive; font-size: 14px; color: #444;'>❌</span>"
+        paid_mark = "✔" if d['pay_type'] == "PAID" else "<span style='font-family: \"Caveat\", \"Brush Script MT\", cursive; font-size: 15px; color: #444;'>❌</span>"
+        topay_mark = "✔" if d['pay_type'] == "TO PAY" else "<span style='font-family: \"Caveat\", \"Brush Script MT\", cursive; font-size: 15px; color: #444;'>❌</span>"
+        billing_mark = "✔" if d['pay_type'] == "Monthly Billing" else "<span style='font-family: \"Caveat\", \"Brush Script MT\", cursive; font-size: 15px; color: #444;'>❌</span>"
 
         return f"""
-        <div class="copy-box" style="border: 1px solid #000; padding: 2px 4px; background: #fff; font-family: Arial, sans-serif; box-sizing: border-box; height: 30.5vh; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 2mm; page-break-inside: avoid; break-inside: avoid;">
+        <div class="copy-box" style="border: 1px solid #000; padding: 3px 5px; background: #fff; font-family: Arial, sans-serif; box-sizing: border-box; margin-bottom: 4mm; page-break-inside: avoid; break-inside: avoid;">
             <div>
-                <div style="background: #000; color: #fff; text-align: center; font-weight: bold; font-size: 9.5px; padding: 1px 0;">
+                <div style="background: #000; color: #fff; text-align: center; font-weight: bold; font-size: 9.5px; padding: 2px 0; margin-bottom: 2px;">
                     કાચ, પ્લાસ્ટીક, ફાયબર અથવા લીક્વીડ માલ ડેમેજ અથવા લીક થાય તો તેની જવાબદારી કંપનીની રહેશે નહીં.
                 </div>
 
                 <table style="width: 100%; border-collapse: collapse; margin-top: 1px;">
                     <tr>
                         <td style="width: 50%; vertical-align: top;">
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <svg width="40" height="20" viewBox="0 0 60 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="2" y="10" width="30" height="15" fill="#333" />
-                                    <path d="M32 14L44 14L50 20L50 25L32 25Z" fill="#333" />
-                                    <circle cx="10" cy="26" r="4" fill="#000" stroke="#fff" stroke-width="1.5"/>
-                                    <circle cx="24" cy="26" r="4" fill="#000" stroke="#fff" stroke-width="1.5"/>
-                                    <circle cx="42" cy="26" r="4" fill="#000" stroke="#fff" stroke-width="1.5"/>
-                                    <line x1="6" y1="5" x2="35" y2="5" stroke="#333" stroke-width="2"/>
-                                </svg>
-                                <div>
-                                    <div style="font-size: 9.5px; color: #d32f2f; font-weight: bold; font-style: italic; font-family: 'Times New Roman', serif; line-height: 1;">
-                                        Always on Time
-                                    </div>
-                                    <div style="font-size: 16px; font-weight: 900; font-family: 'Georgia', 'Times New Roman', serif; letter-spacing: 0.5px; line-height: 1.1; white-space: nowrap;">
-                                        <span style="color: #d32f2f;">FORTUNE</span> <span style="color: #000;">EXPRESS CARGO</span>
-                                    </div>
+                            <div>
+                                <div style="font-size: 10px; color: #d32f2f; font-weight: bold; font-style: italic; font-family: 'Times New Roman', serif; line-height: 1;">
+                                    Always on Time
+                                </div>
+                                <div style="font-size: 19px; font-weight: 900; font-family: 'Georgia', 'Times New Roman', serif; letter-spacing: 0.8px; line-height: 1.1; white-space: nowrap;">
+                                    <span style="color: #d32f2f;">FORTUNE</span> <span style="color: #000;">EXPRESS CARGO</span>
                                 </div>
                             </div>
-                            <div style="font-size: 9px; line-height: 1.1; margin-top: 1px;">
-                                <b>E-mail :</b> fortuneexpresscargo@gmail.com | <b style="color:#d32f2f; font-size:10px;">M.: 9427450535</b><br>
-                                <b>Add :</b> 15, Bhagwan Estate, Opp. Ekta Hotel Lane, Aslali - 382427
+                            <div style="font-size: 9px; line-height: 1.2; margin-top: 2px;">
+                                <b>E-mail :</b> fortuneexpresscargo@gmail.com | <b style="color:#d32f2f; font-size:10px;">M.: 9173165886</b><br>
+                                <b>ADDRESS :</b> 15, BHAGWAN ESTATE, OPP. EKTA HOTEL LINE, ASLALI - 382427
                             </div>
                         </td>
                         <td style="width: 25%; vertical-align: top; text-align: center;">
-                            <div style="font-size: 9.5px; line-height: 1.1; text-align: left; display: inline-block;">
+                            <div style="font-size: 9.5px; line-height: 1.2; text-align: left; display: inline-block;">
                                 <b>PAN No. :</b> AGVPM3701F<br>
                                 <b>GST No. :</b> 24AGVPM3701F2ZF<br>
                                 <b>SAC No. :</b> 9965
                             </div>
-                            <div style="margin-top: 1px;">
-                                <span style="border: 1px solid #000; padding: 1px 4px; border-radius: 3px; font-weight: bold; font-size: 9.5px; background: #fff; display: inline-block;">
+                            <div style="margin-top: 2px;">
+                                <span style="border: 1px solid #000; padding: 1px 6px; border-radius: 3px; font-weight: bold; font-size: 9.5px; background: #fff; display: inline-block;">
                                     {copy_title}
                                 </span>
                             </div>
                         </td>
                         <td style="width: 25%; vertical-align: top; text-align: center;">
-                            <div style="border: 1px solid #000; padding: 1px;">
+                            <div style="border: 1px solid #000; padding: 2px;">
                                 <div style="font-size: 8.5px; font-weight: bold; color: #333;">DOCKET NUMBER</div>
-                                <div style="font-size: 16px; font-weight: bold; color: #d32f2f; line-height: 1;">{d['lr_no']}</div>
+                                <div style="font-size: 17px; font-weight: bold; color: #d32f2f; line-height: 1.1;">{d['lr_no']}</div>
                                 <div style="font-size: 9.5px;"><b>DATE :</b> {d['date']}</div>
                             </div>
-                            <table style="width: 100%; border: 1px solid #000; margin-top: 1px; font-size: 9.5px; text-align: left; border-collapse: collapse;">
-                                <tr><td style="border: 1px solid #000; padding: 1px 2px;"><b>FROM :</b> {d['from']}</td></tr>
-                                <tr><td style="border: 1px solid #000; padding: 1px 2px;"><b>TO :</b> {d['to']}</td></tr>
+                            <table style="width: 100%; border: 1px solid #000; margin-top: 2px; font-size: 9.5px; text-align: left; border-collapse: collapse;">
+                                <tr><td style="border: 1px solid #000; padding: 2px 3px;"><b>FROM :</b> {d['from']}</td></tr>
+                                <tr><td style="border: 1px solid #000; padding: 2px 3px;"><b>TO :</b> {d['to']}</td></tr>
                             </table>
                         </td>
                     </tr>
                 </table>
 
-                <table style="width: 100%; border-collapse: collapse; margin-top: 1px; border: 1px solid #000; font-size: 10px;">
+                <table style="width: 100%; border-collapse: collapse; margin-top: 3px; border: 1px solid #000; font-size: 10px;">
                     <tr>
-                        <td style="width: 50%; border: 1px solid #000; padding: 2px 3px; vertical-align: top; line-height: 1.15;">
+                        <td style="width: 50%; border: 1px solid #000; padding: 3px 4px; vertical-align: top; line-height: 1.2;">
                             <b style="font-size: 9.5px;">CONSIGNOR DETAILS (PLACE OF SUPPLY)</b><br>
                             <b>NAME :</b> {d['consignor']}<br>
                             <b>GST NO. :</b> {d['consignor_gst']} &nbsp;&nbsp;|&nbsp;&nbsp; <b>CONTACT :</b> {d['consignor_contact']}
                         </td>
-                        <td style="width: 50%; border: 1px solid #000; padding: 2px 3px; vertical-align: top; line-height: 1.15;">
+                        <td style="width: 50%; border: 1px solid #000; padding: 3px 4px; vertical-align: top; line-height: 1.2;">
                             <b style="font-size: 9.5px;">CONSIGNEE DETAILS (DELIVERY DESTINATION)</b><br>
                             <b>NAME :</b> {d['consignee']}<br>
                             <b>GST NO. :</b> {d['consignee_gst']} &nbsp;&nbsp;|&nbsp;&nbsp; <b>CONTACT :</b> {d['consignee_contact']}<br>
@@ -222,81 +212,82 @@ if 'lr_data' in st.session_state:
                     </tr>
                 </table>
 
-                <table style="width: 100%; border-collapse: collapse; margin-top: 1px; border: 1px solid #000; font-size: 9.5px; text-align: center;">
+                <table style="width: 100%; border-collapse: collapse; margin-top: 2px; border: 1px solid #000; font-size: 9.5px; text-align: center;">
                     <tr style="font-weight: bold; background: #f2f2f2;">
-                        <td style="border: 1px solid #000; width: 45%; padding: 1px;" colspan="3">PACKAGE INFORMATION</td>
-                        <td style="border: 1px solid #000; width: 31%; padding: 1px;" colspan="2">IN RUPEES (AMOUNT DETAILS)</td>
+                        <td style="border: 1px solid #000; width: 45%; padding: 2px;" colspan="3">PACKAGE INFORMATION</td>
+                        <td style="border: 1px solid #000; width: 31%; padding: 2px;" colspan="2">IN RUPEES (AMOUNT DETAILS)</td>
                         <td style="border: 1px solid #000; width: 8%; font-size: 8px;">Monthly Billing</td>
                         <td style="border: 1px solid #000; width: 8%; font-size: 8px;">PAID</td>
                         <td style="border: 1px solid #000; width: 8%; font-size: 8px;">TO PAY</td>
                     </tr>
                     <tr>
-                        <td style="border: 1px solid #000; padding: 1px; width: 20%;">{d['pkg_type']}</td>
-                        <td style="border: 1px solid #000; padding: 1px; width: 15%;">{d['no_pkg']}</td>
-                        <td style="border: 1px solid #000; padding: 1px; width: 10%;">{d['volume']}</td>
-                        <td style="border: 1px solid #000; text-align: left; padding: 1px 3px;">BASIC FREIGHT</td>
-                        <td style="border: 1px solid #000; text-align: right; padding: 1px 3px;">{d['basic_freight']:.2f}</td>
-                        <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 15px; font-weight: bold;" rowspan="11">{billing_mark}</td>
-                        <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 15px; font-weight: bold;" rowspan="11">{paid_mark}</td>
-                        <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 15px; font-weight: bold;" rowspan="11">{topay_mark}</td>
+                        <td style="border: 1px solid #000; padding: 2px; width: 20%;">{d['pkg_type']}</td>
+                        <td style="border: 1px solid #000; padding: 2px; width: 15%;">{d['no_pkg']}</td>
+                        <td style="border: 1px solid #000; padding: 2px; width: 10%;">{d['volume']}</td>
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px 4px;">BASIC FREIGHT</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px 4px;">{d['basic_freight']:.2f}</td>
+                        <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 16px; font-weight: bold;" rowspan="11">{billing_mark}</td>
+                        <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 16px; font-weight: bold;" rowspan="11">{paid_mark}</td>
+                        <td style="border: 1px solid #000; vertical-align: middle; text-align: center; font-size: 16px; font-weight: bold;" rowspan="11">{topay_mark}</td>
                     </tr>
                     <tr>
-                        <td style="border: 1px solid #000; padding: 2px 3px; text-align: left;" colspan="3" rowspan="10" vertical-align="top">
+                        <td style="border: 1px solid #000; padding: 3px 4px; text-align: left;" colspan="3" rowspan="10" vertical-align="top">
                             <b>GOODS DESCRIPTION :</b> {d['goods_desc']}<br>
                             <b>NO OF PACKAGES :</b> {d['no_pkg']}
+                             <b>E WAY BILL NO :
                         </td>
-                        <td style="border: 1px solid #000; text-align: left; padding: 1px 3px;">VALUE SURCHARGE (FOV)</td>
-                        <td style="border: 1px solid #000; text-align: right; padding: 1px 3px;">{d['value_surcharge']:.2f}</td>
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px 4px;">VALUE SURCHARGE (FOV)</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px 4px;">{d['value_surcharge']:.2f}</td>
                     </tr>
                     <tr>
-                        <td style="border: 1px solid #000; text-align: left; padding: 1px 3px;">DOCKET CHARGES</td>
-                        <td style="border: 1px solid #000; text-align: right; padding: 1px 3px;">{d['docket_charges']:.2f}</td>
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px 4px;">DOCKET CHARGES</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px 4px;">{d['docket_charges']:.2f}</td>
                     </tr>
                     <tr>
-                        <td style="border: 1px solid #000; text-align: left; padding: 1px 3px;">OTHER CHARGES</td>
-                        <td style="border: 1px solid #000; text-align: right; padding: 1px 3px;">{d['other_charges']:.2f}</td>
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px 4px;">OTHER CHARGES</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px 4px;">{d['other_charges']:.2f}</td>
                     </tr>
                     <tr>
-                        <td style="border: 1px solid #000; text-align: left; padding: 1px 3px;">ODA CHARGES</td>
-                        <td style="border: 1px solid #000; text-align: right; padding: 1px 3px;">{d['oda_charges']:.2f}</td>
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px 4px;">ODA CHARGES</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px 4px;">{d['oda_charges']:.2f}</td>
                     </tr>
                     <tr>
-                        <td style="border: 1px solid #000; text-align: left; padding: 1px 3px;">SURCHARGES</td>
-                        <td style="border: 1px solid #000; text-align: right; padding: 1px 3px;">{d['surcharges']:.2f}</td>
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px 4px;">SURCHARGES</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px 4px;">{d['surcharges']:.2f}</td>
                     </tr>
                     <tr style="font-weight: bold; background: #f9f9f9;">
-                        <td style="border: 1px solid #000; text-align: left; padding: 1px 3px;">Total</td>
-                        <td style="border: 1px solid #000; text-align: right; padding: 1px 3px;">{d['total_freight']:.2f}</td>
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px 4px;">Total</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px 4px;">{d['total_freight']:.2f}</td>
                     </tr>
                     <tr>
-                        <td style="border: 1px solid #000; text-align: left; padding: 1px 3px;">CGST (9%)</td>
-                        <td style="border: 1px solid #000; text-align: right; padding: 1px 3px;">{d['cgst']:.2f}</td>
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px 4px;">CGST (9%)</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px 4px;">{d['cgst']:.2f}</td>
                     </tr>
                     <tr>
-                        <td style="border: 1px solid #000; text-align: left; padding: 1px 3px;">SGST (9%)</td>
-                        <td style="border: 1px solid #000; text-align: right; padding: 1px 3px;">{d['sgst']:.2f}</td>
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px 4px;">SGST (9%)</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px 4px;">{d['sgst']:.2f}</td>
                     </tr>
                     <tr>
-                        <td style="border: 1px solid #000; text-align: left; padding: 1px 3px;">IGST</td>
-                        <td style="border: 1px solid #000; text-align: right; padding: 1px 3px;">{d['igst']:.2f}</td>
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px 4px;">IGST</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px 4px;">{d['igst']:.2f}</td>
                     </tr>
                     <tr style="font-weight: bold; background: #eee;">
-                        <td style="border: 1px solid #000; text-align: left; padding: 1px 3px;">GRAND TOTAL</td>
-                        <td style="border: 1px solid #000; text-align: right; padding: 1px 3px;">{d['grand_total']:.2f}</td>
+                        <td style="border: 1px solid #000; text-align: left; padding: 2px 4px;">GRAND TOTAL</td>
+                        <td style="border: 1px solid #000; text-align: right; padding: 2px 4px;">{d['grand_total']:.2f}</td>
                     </tr>
                 </table>
 
-                <div style="border: 1px solid #000; margin-top: 1px; padding: 1px 3px; font-size: 9.5px;">
+                <div style="border: 1px solid #000; margin-top: 2px; padding: 2px 4px; font-size: 9.5px;">
                     <b>INVOICE NO. & VALUE | WEIGHT DETAILS :-</b> {d['inv_no_val_wt']}
                 </div>
 
-                <div style="font-size: 7px; margin-top: 1px; text-align: justify; line-height: 1.02; color: #000; font-weight: 600;">
-                    (૧) પેક દાગીનામાં રહેલા માલ માટેની પરમીટ સંબંધી અગર ગુનાહિત માલ માટેની જવાબદારી કંપનીની રહેશે નહીં. (૨) આગ, ચોરી, વરસાદ, અકસ્માત, હુલ્લડ, હડતાલ વગેરે અણધાર્યા સંજોગોમાં માલને કોઈપણ નુકશાન થશે તો કંપનીની જવાબદારી રહેશે નહીં. (૩) ગ્રાહક પોતાના માલનું નુકશાન રોકવા માટે વીમો ઉતરાવી લેવો જરૂરી છે. (૪) માલ અંગેની કોઈપણ જાતની ફરીયાદ હોય તો સાત દિવસની અંદર કંપનીને જાણ કરવી. ત્યારબાદ કોઈપણ જાતની કમ્પ્લેન ચાલે નહીં. (૫) કોઈપણ કારણસર ગવર્નમેન્ટ ઓથોરીટી માલ અટકાવશે, જપ્ત કરશે તો કંપની જવાબદાર રહેશે નહીં. (૬) જો ભાડું પહેલેથી ન હોય તો માલ ઉપર લીયન રહેશે. લેનાર કંપની જો માલ લેવાની ના પાડશે તો લાવવા, લઇ જવા અને સ્ટોર કરવાની થઈ લાગશે તે પૂરેપૂરી રકમ ભરપાઈ કરશે માલ ફૂટી કટી આપવાબંધનરહેશે. (૭) અમોએ શરત જે કાંઈ ભરેલી હોય તે વ્યાપારીને બંધનકર્તા રહેશે. (૮) ન્યાયનું કેન્દ્ર વાપી રહેશે. The Company is not responsible for Breakage, Leakage, Damage, Shortage in pack Cartoon/Case/Box/Bags of Goods.
+                <div style="font-size: 7.5px; margin-top: 2px; text-align: justify; line-height: 1.1; color: #000; font-weight: 600;">
+                    (૧) પેક દાગીનામાં રહેલા માલ માટેની પરમીટ સંબંધી અગર ગુનાહિત માલ માટેની જવાબદારી કંપનીની રહેશે નહીં. (૨) આગ, ચોરી, વરસાદ, અકસ્માત, હુલ્લડ, હડતાલ વગેરે અણધાર્યા સંજોગોમાં માલને કોઈપણ નુકશાન થશે તો કંપનીની જવાબદારી રહેશે નહીં. (૩) ગ્રાહક પોતાના માલનું નુકશાન રોકવા માટે વીમો ઉતરાવી લેવો જરૂરી છે. (૪) માલ અંગેની કોઈપણ જાતની ફરીયાદ હોય તો સાત દિવસની અંદર કંપનીને જાણ કરવી. ત્યારબાદ કોઈપણ જાતની કમ્પ્લેન ચાલે નહીં. (૫) કોઈપણ કારણસર ગવર્નમેન્ટ ઓથોરીટી માલ અટકાવશે, જપ્ત કરશે તો કંપની જવાબદાર રહેશે નહીં. (૬) જો ભાડું પહેલેથી ન હોય તો માલ ઉપર લીયન રહેશે. લેનાર કંપની જો માલ લેવાની ના પાડશે તો લાવવા, લઇ જવા અને સ્ટોર કરવાની થઈ લાગશે તે પૂરેપૂરી રકમ ભરપાઈ કરશે માલ ફૂટી કટી આપવાબંધનરહેશે. (૭) અમોએ શરત જે કાંઈ ભરેલી હોય તે વ્યાપારીને બંધનકર્તા રહેશે. (૮) ન્યાયનું કેન્દ્ર વાપી રહેશે. The Company is not responsible for Breakage, Leakage, Damage, Shortage in pack Cartoon/Case/Box/Bags of Goods.the consignor will be held responsible for any issues related to the e-way bill.
                 </div>
             </div>
 
-            <div style="font-size: 8px; border-top: 1px solid #000; padding-top: 1px; margin-top: 1px; line-height: 1.05; font-weight: bold; text-align: justify;">
-                <b>Navsari :-</b> 8000537847 &nbsp;|&nbsp; <b>Valsad :-</b> 6352700152 &nbsp;|&nbsp; <b>Vapi :-</b> 9427335518 &nbsp;| |&nbsp; <b>Ankleshwar :-</b> 9978811411 &nbsp;|&nbsp; <b>Surat :-</b> 8467818918 &nbsp;||&nbsp; <b>Sarkhej Amd. :-</b> 9427450535 || narol 9173165886 ||  madhupura 9427450535
+            <div style="font-size: 8.5px; border-top: 1px solid #000; padding-top: 2px; margin-top: 2px; line-height: 1.1; font-weight: bold; text-align: justify;">
+                <b>NAVSARI :-</b> 8000537847 &nbsp;|&nbsp; <b>VALSAD :-</b> 6351700152 &nbsp;|&nbsp; <b>VAPI :-</b> 9427335518 &nbsp;|&nbsp; <b>MADHUPURA :-</b> 9173165886 &nbsp;|&nbsp; <b>ANKLESHWAR :-</b> 9978811411 &nbsp;|&nbsp; <b>SURAT :-</b> 8467818918 &nbsp;|&nbsp; <b>NAROL :-</b> 9427450535 &nbsp;|&nbsp; <b>SARKHEJ. :-</b> 9427450535
             </div>
         </div>
         """
@@ -309,7 +300,7 @@ if 'lr_data' in st.session_state:
         @media print {{
             @page {{
                 size: A4 portrait;
-                margin: 4mm !important;
+                margin: 5mm !important;
             }}
             html, body {{
                 width: 100% !important;
@@ -320,10 +311,9 @@ if 'lr_data' in st.session_state:
                 display: none !important;
             }}
             .copy-box {{
-                height: 30.5vh !important;
+                margin-bottom: 3mm !important;
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
-                margin-bottom: 2mm !important;
             }}
         }}
     </style>
@@ -347,7 +337,7 @@ if 'lr_data' in st.session_state:
     """
 
     st.markdown("---")
-    st.components.v1.html(full_html, height=1100, scrolling=True)
+    st.components.v1.html(full_html, height=1200, scrolling=True)
 
 st.markdown("---")
 st.subheader("📊 જુનો બધો ડેટા (Saved LR History)")
