@@ -162,7 +162,7 @@ if 'lr_data' in st.session_state:
                                 <div style="font-size: 9.5px; color: #d32f2f; font-weight: bold; font-style: italic; font-family: 'Times New Roman', serif; line-height: 1;">
                                     Always on Time
                                 </div>
-                                <div style="font-size: 17px; font-weight: 900; font-family: 'Georgia', 'Times New Roman', serif; letter-spacing: 1px; line-height: 1.1; white-space: nowrap; width: 100%;">
+                                <div style="font-size: 15.5px; font-weight: 900; font-family: 'Georgia', 'Times New Roman', serif; letter-spacing: 0.5px; line-height: 1.1; white-space: nowrap; width: 100%; display: inline-block;">
                                     <span style="color: #d32f2f;">FORTUNE</span> <span style="color: #000;">EXPRESS CARGO</span>
                                 </div>
                             </div>
@@ -342,7 +342,6 @@ if 'lr_data' in st.session_state:
 st.markdown("---")
 st.subheader("📊 જુનો બધો ડેટા (Saved LR History & Backup)")
 if not df.empty:
-    # Add Download Backup Button
     csv_data = df.to_csv(index=False).encode('utf-8')
     st.download_button(
         label="📥 Download All LR Data (Excel Backup)",
@@ -353,3 +352,4 @@ if not df.empty:
     st.dataframe(df, use_container_width=True)
 else:
     st.info("No saved records found yet.")
+
