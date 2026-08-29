@@ -8,40 +8,39 @@ st.set_page_config(page_title="Fortune Express Cargo - LR Generator", layout="wi
 DATA_FILE = "lr_database.csv"
 PARTY_FILE = "party_database.csv"
 
-# Safely initialize or reset corrupted databases
+# Comprehensive columns definition
+columns_list = [
+    "LR_No", "Date", "Consignor", "Consignor_GST", "Consignor_Contact", 
+    "Consignee", "Consignee_GST", "Consignee_Contact", "From", "To", 
+    "Packages", "Goods", "Eway_Bill", "Grand_Total", "Pay_Type"
+]
+
+# Safely initialize or load LR database without losing old data
 if os.path.exists(DATA_FILE):
     try:
         df = pd.read_csv(DATA_FILE)
+        # Check if columns match, if not add missing columns dynamically to preserve old data
+        for col in columns_list:
+            if col not in df.columns:
+                df[col] = ""
     except Exception:
-        os.remove(DATA_FILE)
-        df = pd.DataFrame(columns=[
-            "LR_No", "Date", "Consignor", "Consignor_GST", "Consignor_Contact", 
-            "Consignee", "Consignee_GST", "Consignee_Contact", "From", "To", 
-            "Packages", "Goods", "Eway_Bill", "Grand_Total", "Pay_Type"
-        ])
-        df.to_csv(DATA_FILE, index=False)
+        df = pd.DataFrame(columns=columns_list)
 else:
-    df = pd.DataFrame(columns=[
-        "LR_No", "Date", "Consignor", "Consignor_GST", "Consignor_Contact", 
-        "Consignee", "Consignee_GST", "Consignee_Contact", "From", "To", 
-        "Packages", "Goods", "Eway_Bill", "Grand_Total", "Pay_Type"
-    ])
+    df = pd.DataFrame(columns=columns_list)
     df.to_csv(DATA_FILE, index=False)
 
 if os.path.exists(PARTY_FILE):
     try:
         df_party = pd.read_csv(PARTY_FILE)
     except Exception:
-        os.remove(PARTY_FILE)
+        df_party = pd.DataFrame(columns=["Name", "GST", "Contact"])
+else:
         df_party = pd.DataFrame(columns=["Name", "GST", "Contact"])
         df_party.to_csv(PARTY_FILE, index=False)
-else:
-    df_party = pd.DataFrame(columns=["Name", "GST", "Contact"])
-    df_party.to_csv(PARTY_FILE, index=False)
 
 st.title("🚛 FORTUNE EXPRESS CARGO - LR GENERATOR")
 
-next_lr = 100 if df.empty or df["LR_No"].max() < 100 else int(df["LR_No"].max()) + 1
+next_lr = 100 if df.empty or df["LR_No"].dropna().empty or pd.to_numeric(df["LR_No"], errors='coerce').max() < 100 else int(pd.to_numeric(df["LR_No"], errors='coerce').max()) + 1
 
 st.subheader("નવી LR એન્ટ્રી કરો (Create New LR)")
 
@@ -67,14 +66,14 @@ with st.form("lr_form"):
         consignee_gst = st.text_input("Consignee GST", "")
         consignee_contact = st.text_input("Consignee Contact", "")
         to_place = st.text_input("To", "")
-        instruction = st.text_input("Instruction", "")
+        
         
     st.markdown("---")
     col3, col4 = st.columns(2)
     
     with col3:
-        pkg_type = st.text_input("Type of Packaging", "BOX")
-        no_pkg = st.text_input("No. of Packages", "1")
+        pkg_type = st.text_input("Type of Packaging", )
+        no_pkg = st.text_input("No. of Packages", )
         volume = st.text_input("Volume (Inch)", "-")
         goods_desc = st.text_input("Goods Description", "")
         eway_bill = st.text_input("E-Way Bill No.", "")
@@ -115,16 +114,16 @@ if submit:
         lr_no, formatted_date, consignor, consignor_gst, consignor_contact, 
         consignee, consignee_gst, consignee_contact, from_place, to_place, 
         no_pkg, goods_desc, eway_bill, grand_total, pay_type
-    ]], columns=[
-        "LR_No", "Date", "Consignor", "Consignor_GST", "Consignor_Contact", 
-        "Consignee", "Consignee_GST", "Consignee_Contact", "From", "To", 
-        "Packages", "Goods", "Eway_Bill", "Grand_Total", "Pay_Type"
-    ])
-    new_data.to_csv(DATA_FILE, mode='a', header=False, index=False)
+    ]], columns=columns_list)
+    
+    # Append safely using pandas concat
+    df = pd.concat([df, new_data], ignore_index=True)
+    df.to_csv(DATA_FILE, index=False)
 
     if consignor and consignor not in consignor_names:
         new_party = pd.DataFrame([[consignor, consignor_gst, consignor_contact]], columns=["Name", "GST", "Contact"])
-        new_party.to_csv(PARTY_FILE, mode='a', header=False, index=False)
+        df_party = pd.concat([df_party, new_party], ignore_index=True)
+        df_party.to_csv(PARTY_FILE, index=False)
 
     st.success(f"✅ LR No. {lr_no} સફળતાપૂર્વક સેવ થઈ ગયું છે!")
 
@@ -166,7 +165,7 @@ if 'lr_data' in st.session_state:
                             </div>
                             <div style="font-size: 7px; line-height: 1.05; margin-top: 1.5px; text-transform: uppercase;">
                                 <b>E-MAIL :</b> FORTUNEEXPRESSCARGO@GMAIL.COM | <b style="color:#d32f2f; font-size:8px;">M.: 9173165886</b><br>
-                                <b>ADD :</b> 15, BHAGWAN ESTATE, OPP. EKTA HOTEL LANE, ASLALI - 382427
+                                <b>ADDRESS :</b> 15, BHAGWAN ESTATE, OPP. EKTA HOTEL LANE, ASLALI - 382427
                             </div>
                         </td>
                         <td style="width: 27%; vertical-align: top; text-align: center; padding: 0 2px;">
@@ -206,7 +205,7 @@ if 'lr_data' in st.session_state:
                             <b style="font-size: 7.5px;">CONSIGNEE DETAILS (DELIVERY DESTINATION)</b><br>
                             <b>NAME :</b> {d['consignee']}<br>
                             <b>GST NO. :</b> {d['consignee_gst']} &nbsp;|&nbsp; <b>CONTACT :</b> {d['consignee_contact']}<br>
-                            <b>INSTRUCTION :</b> {d['instruction']}
+                            
                         </td>
                     </tr>
                 </table>
@@ -327,9 +326,9 @@ if 'lr_data' in st.session_state:
             </button>
         </div>
         <div>
-            {get_receipt_html("CONSIGNOR COPY (કોન્સાઈનર કોપી)")}
-            {get_receipt_html("CONSIGNEE COPY (કોન્સાઈની કોપી)")}
-            {get_receipt_html("DRIVER COPY (ડ્રાઈવર કોપી)")}
+            {get_receipt_html("CONSIGNOR COPY")}
+            {get_receipt_html("CONSIGNEE COPY")}
+            {get_receipt_html("OFFICE COPY")}
         </div>
     </body>
     </html>
