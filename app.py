@@ -8,18 +8,17 @@ st.set_page_config(page_title="Fortune Express Cargo - LR Generator", layout="wi
 DATA_FILE = "lr_database.csv"
 PARTY_FILE = "party_database.csv"
 
-# Comprehensive columns definition
+# Columns definition
 columns_list = [
     "LR_No", "Date", "Consignor", "Consignor_GST", "Consignor_Contact", 
     "Consignee", "Consignee_GST", "Consignee_Contact", "From", "To", 
     "Packages", "Goods", "Eway_Bill", "Grand_Total", "Pay_Type"
 ]
 
-# Safely initialize or load LR database without losing old data
+# Safely initialize or load LR database
 if os.path.exists(DATA_FILE):
     try:
         df = pd.read_csv(DATA_FILE)
-        # Check if columns match, if not add missing columns dynamically to preserve old data
         for col in columns_list:
             if col not in df.columns:
                 df[col] = ""
@@ -35,8 +34,8 @@ if os.path.exists(PARTY_FILE):
     except Exception:
         df_party = pd.DataFrame(columns=["Name", "GST", "Contact"])
 else:
-        df_party = pd.DataFrame(columns=["Name", "GST", "Contact"])
-        df_party.to_csv(PARTY_FILE, index=False)
+    df_party = pd.DataFrame(columns=["Name", "GST", "Contact"])
+    df_party.to_csv(PARTY_FILE, index=False)
 
 st.title("🚛 FORTUNE EXPRESS CARGO - LR GENERATOR")
 
@@ -66,7 +65,7 @@ with st.form("lr_form"):
         consignee_gst = st.text_input("Consignee GST", "")
         consignee_contact = st.text_input("Consignee Contact", "")
         to_place = st.text_input("To", "")
-        
+        instruction = st.text_input("Instruction", "")
         
     st.markdown("---")
     col3, col4 = st.columns(2)
@@ -116,7 +115,6 @@ if submit:
         no_pkg, goods_desc, eway_bill, grand_total, pay_type
     ]], columns=columns_list)
     
-    # Append safely using pandas concat
     df = pd.concat([df, new_data], ignore_index=True)
     df.to_csv(DATA_FILE, index=False)
 
@@ -165,7 +163,7 @@ if 'lr_data' in st.session_state:
                             </div>
                             <div style="font-size: 7px; line-height: 1.05; margin-top: 1.5px; text-transform: uppercase;">
                                 <b>E-MAIL :</b> FORTUNEEXPRESSCARGO@GMAIL.COM | <b style="color:#d32f2f; font-size:8px;">M.: 9173165886</b><br>
-                                <b>ADDRESS :</b> 15, BHAGWAN ESTATE, OPP. EKTA HOTEL LANE, ASLALI - 382427
+                                <b>ADD :</b> 15, BHAGWAN ESTATE, OPP. EKTA HOTEL LANE, ASLALI - 382427
                             </div>
                         </td>
                         <td style="width: 27%; vertical-align: top; text-align: center; padding: 0 2px;">
@@ -205,7 +203,7 @@ if 'lr_data' in st.session_state:
                             <b style="font-size: 7.5px;">CONSIGNEE DETAILS (DELIVERY DESTINATION)</b><br>
                             <b>NAME :</b> {d['consignee']}<br>
                             <b>GST NO. :</b> {d['consignee_gst']} &nbsp;|&nbsp; <b>CONTACT :</b> {d['consignee_contact']}<br>
-                            
+                            <b>INSTRUCTION :</b> {d['instruction']}
                         </td>
                     </tr>
                 </table>
@@ -328,7 +326,7 @@ if 'lr_data' in st.session_state:
         <div>
             {get_receipt_html("CONSIGNOR COPY")}
             {get_receipt_html("CONSIGNEE COPY")}
-            {get_receipt_html("OFFICE COPY")}
+            {get_receipt_html("DRIVER COPY")}
         </div>
     </body>
     </html>
