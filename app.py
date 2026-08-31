@@ -174,7 +174,6 @@ if 'lr_data' in st.session_state:
                 <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
                     <tr>
                         <td style="width: 46%; vertical-align: top; padding-right: 4px; overflow: hidden;">
-                            <img src="https://via.placeholder.com/150x40?text=LOGO" style="height: 25px; object-fit: contain; margin-bottom: 1px;" alt="Logo">
                             
                             <div style="font-size: 9px; color: #d32f2f; font-weight: bold; font-style: italic; font-family: 'Times New Roman', serif; line-height: 1;">
                                 Always on Time
