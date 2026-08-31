@@ -15,7 +15,7 @@ columns_list = [
     "Packages", "Goods", "Eway_Bill", "Grand_Total", "Pay_Type"
 ]
 
-# Safely initialize or load LR database
+# Robust loading/initialization of LR Database
 if os.path.exists(DATA_FILE):
     try:
         df = pd.read_csv(DATA_FILE)
@@ -28,6 +28,7 @@ else:
     df = pd.DataFrame(columns=columns_list)
     df.to_csv(DATA_FILE, index=False)
 
+# Robust loading/initialization of Party Database
 if os.path.exists(PARTY_FILE):
     try:
         df_party = pd.read_csv(PARTY_FILE)
@@ -39,7 +40,13 @@ else:
 
 st.title("🚛 FORTUNE EXPRESS CARGO - LR GENERATOR")
 
-next_lr = 100 if df.empty or df["LR_No"].dropna().empty or pd.to_numeric(df["LR_No"], errors='coerce').max() < 100 else int(pd.to_numeric(df["LR_No"], errors='coerce').max()) + 1
+# Correct automatic LR number calculation from saved database
+if not df.empty and "LR_No" in df.columns:
+    numeric_lr = pd.to_numeric(df["LR_No"], errors='coerce')
+    max_lr = numeric_lr.max()
+    next_lr = int(max_lr) + 1 if pd.notna(max_lr) and max_lr >= 100 else 100
+else:
+    next_lr = 100
 
 st.subheader("નવી LR એન્ટ્રી કરો (Create New LR)")
 
@@ -49,7 +56,7 @@ with st.form("lr_form"):
     col1, col2 = st.columns(2)
     
     with col1:
-        lr_no = st.number_input("LR Number / Docket Number", value=next_lr)
+        lr_no = st.number_input("LR Number / Docket Number", value=next_lr, step=1)
         date = st.date_input("Date", datetime.now(), format="DD/MM/YYYY")
         
         consignor = st.selectbox("Consignor Name (Place of Supply)", options=[""] + consignor_names, index=0)
@@ -71,8 +78,8 @@ with st.form("lr_form"):
     col3, col4 = st.columns(2)
     
     with col3:
-        pkg_type = st.text_input("Type of Packaging", )
-        no_pkg = st.text_input("No. of Packages", )
+        pkg_type = st.text_input("Type of Packaging", "BOX")
+        no_pkg = st.text_input("No. of Packages", "1")
         volume = st.text_input("Volume (Inch)", "-")
         goods_desc = st.text_input("Goods Description", "")
         eway_bill = st.text_input("E-Way Bill No.", "")
@@ -111,17 +118,29 @@ if submit:
     formatted_date = date.strftime("%d-%m-%Y")
     new_data = pd.DataFrame([[
         lr_no, formatted_date, consignor, consignor_gst, consignor_contact, 
-        consignee, consignee_gst, consignee_contact, from_place, to_place, 
+        consignee, consignee_gst, consignor_contact, from_place, to_place, 
         no_pkg, goods_desc, eway_bill, grand_total, pay_type
     ]], columns=columns_list)
     
-    df = pd.concat([df, new_data], ignore_index=True)
+    # Reload fresh database to prevent any overwrite conflicts, then append & save
+    if os.path.exists(DATA_FILE):
+        df_disk = pd.read_csv(DATA_FILE)
+        df = pd.concat([df_disk, new_data], ignore_index=True)
+    else:
+        df = pd.concat([df, new_data], ignore_index=True)
+        
     df.to_csv(DATA_FILE, index=False)
 
-    if consignor and consignor not in consignor_names:
-        new_party = pd.DataFrame([[consignor, consignor_gst, consignor_contact]], columns=["Name", "GST", "Contact"])
-        df_party = pd.concat([df_party, new_party], ignore_index=True)
-        df_party.to_csv(PARTY_FILE, index=False)
+    if consignor:
+        if os.path.exists(PARTY_FILE):
+            df_party_disk = pd.read_csv(PARTY_FILE)
+        else:
+            df_party_disk = df_party
+            
+        if consignor not in df_party_disk["Name"].values:
+            new_party = pd.DataFrame([[consignor, consignor_gst, consignor_contact]], columns=["Name", "GST", "Contact"])
+            df_party_disk = pd.concat([df_party_disk, new_party], ignore_index=True)
+            df_party_disk.to_csv(PARTY_FILE, index=False)
 
     st.success(f"✅ LR No. {lr_no} સફળતાપૂર્વક સેવ થઈ ગયું છે!")
 
@@ -155,6 +174,8 @@ if 'lr_data' in st.session_state:
                 <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
                     <tr>
                         <td style="width: 46%; vertical-align: top; padding-right: 4px; overflow: hidden;">
+                            <img src="https://via.placeholder.com/150x40?text=LOGO" style="height: 25px; object-fit: contain; margin-bottom: 1px;" alt="Logo">
+                            
                             <div style="font-size: 9px; color: #d32f2f; font-weight: bold; font-style: italic; font-family: 'Times New Roman', serif; line-height: 1;">
                                 Always on Time
                             </div>
@@ -276,8 +297,20 @@ if 'lr_data' in st.session_state:
                     <b>INVOICE NO. & VALUE | WEIGHT DETAILS :-</b> {d['inv_no_val_wt']}
                 </div>
 
-                <div style="font-size: 7px; margin-top: 2px; text-align: justify; line-height: 1.15; color: #000; font-weight: 600;">
-                    (૧) પેક દાગીનામાં રહેલા માલ માટેની પરમીટ સંબંધી અગર ગુનાહિત માલ માટેની જવાબદારી કંપનીની રહેશે નહીં. (૨) આગ, ચોરી, વરસાદ, અકસ્માત, હુલ્લડ, હડતાલ વગેરે અણધાર્યા સંજોગોમાં માલને કોઈપણ નુકશાન થશે તો કંપનીની જવાબદારી રહેશે નહીં. (૩) ગ્રાહક પોતાના માલનું નુકશાન રોકવા માટે વીમો ઉતરાવી લેવો જરૂરી છે. (૪) માલ અંગેની કોઈપણ જાતની ફરીયાદ હોય તો સાત દિવસની અંદર કંપનીને જાણ કરવી. ત્યારબાદ કોઈપણ જાતની કમ્પ્લેન ચાલે નહીં. (૫) કોઈપણ કારણસર ગવર્નમેન્ટ ઓથોરીટી માલ અટકાવશે, જપ્ત કરશે તો કંપની જવાબદાર રહેશે નહીં. (૬) જો ભાડું પહેલેથી ન હોય તો માલ ઉપર લીયન રહેશે. લેનાર કંપની જો માલ લેવાની ના પાડશે તો લાવવા, લઇ જવા અને સ્ટોર કરવાની થઈ લાગશે તે પૂરેપૂરી રકમ ભરપાઈ કરશે માલ ફૂટી કટી આપવાબંધનરહેશે. (૭) અમોએ શરત જે કાંઈ ભરેલી હોય તે વ્યાપારીને બંધનકર્તા રહેશે. (૮) ન્યાયનું કેન્દ્ર વાપી રહેશે. The Company is not responsible for Breakage, Leakage, Damage, Shortage in pack Cartoon/Case/Box/Bags of Goods.
+                <!-- Signature Section Added Here -->
+                <table style="width: 100%; border-collapse: collapse; margin-top: 2px; font-size: 7.5px;">
+                    <tr>
+                        <td style="width: 50%; text-align: left; padding-top: 15px; font-weight: bold;">
+                            CUSTOMER SIGN.
+                        </td>
+                        <td style="width: 50%; text-align: right; padding-top: 15px; font-weight: bold;">
+                            FOR FORTUNE EXPRESS CARGO
+                        </td>
+                    </tr>
+                </table>
+
+                <div style="font-size: 6.5px; margin-top: 2px; text-align: justify; line-height: 1.15; color: #000; font-weight: 600;">
+                   (૧) પેક દાગીનામાં રહેલા માલ માટેની બીલ અથવા પરમીટ કે E-way બીલ ની સંપુર્ણ જવાબદારી ગ્રાહકની રેહશે (પેક દાગીના મા અગર ગુનાહિત માલ આવશે તો સંપુર્ણ જવાબદારી ગ્રાહકની રહેશે) (૨) યાગ, ચોરી, વરસાદ, ટાફીક, અકસ્માત, હુલ્લડ, હડતાલ, વગેરે, અસાધારણ સંજોગોમાં માલને કોઇપણ નુકશાન થશે તો કંપનીની જવાબદારી નથી, તે બદલ ગ્રાહકે પોતાના માલનું નુકશાન મેળવવા માટે વીમો ઉતરાવી લેવો જરૂરી છે.(3) માલ અંગેની કોઇપણ જાતની ફરીયાદ હોય તો ત્રણ દિવસની અંદર કમ્પનીને જાણ કરવી. ત્યારબાદ કોઈપણ જાતની કમ્પ્લેઇન ચાલશે નહીં. (૪) કોઇપણ કારણસર ગવર્નમેન્ટ ઓથોરીટી માલ અટકાવશે, પકડશે, જપ્ત કરશે તો કંપની જવાબદાર નથી.(૫) જો ભાડું પહેલા આપેલું ન હોય તો માલ ઉપર લીયન રહેશે. લેનાર કંપની જો બાલ લેવાની ના પાડશે તો લાવવા, લઈ જવા અને સ્ટોર કરવાનો ચાર્જ લાગશે તે પુરેપુરી રકમ ભરપાઇ કરેથી માલ છુતો કરી આપવા માં આવશે.(૬) અમોએ જકાત જે કાંઇ ભરેલી હોય તો તે વહેપારીને બંધનકર્તા રહેશે. (૭)કોઇ પણ માલ ૧૦ દિવસ માં છોડાવવામાં નહી આવે તો ડેમરેઝ ચાર્જ લગાવવામાં આવશે. જે પાર્ટીની જવાબદારી રહેશે. (૮)ન્યાયનું કેન્દ્ર વાપી રહેશે.The Company is not responsible for Breakage, Leakage, Damage, Shortage in pack Cartoon/Case/Box/Bags of Goods  
                 </div>
             </div>
 
@@ -300,7 +333,7 @@ if 'lr_data' in st.session_state:
             html, body {{
                 width: 100% !important;
                 margin: 0 !important;
-                padding: 0 !important;
+                padding: 0 !previous !important;
             }}
             .print-btn-container {{
                 display: none !important;
@@ -326,7 +359,7 @@ if 'lr_data' in st.session_state:
         <div>
             {get_receipt_html("CONSIGNOR COPY")}
             {get_receipt_html("CONSIGNEE COPY")}
-            {get_receipt_html("DRIVER COPY")}
+            {get_receipt_html("OFFICE COPY"}
         </div>
     </body>
     </html>
@@ -337,14 +370,21 @@ if 'lr_data' in st.session_state:
 
 st.markdown("---")
 st.subheader("📊 જુનો બધો ડેટા (Saved LR History & Backup)")
-if not df.empty:
-    csv_data = df.to_csv(index=False).encode('utf-8')
+
+# Reload fresh df to show current saved rows accurately
+if os.path.exists(DATA_FILE):
+    df_current = pd.read_csv(DATA_FILE)
+else:
+    df_current = df
+
+if not df_current.empty:
+    csv_data = df_current.to_csv(index=False).encode('utf-8')
     st.download_button(
         label="📥 Download All LR Data (Excel Backup)",
         data=csv_data,
         file_name=f"fortune_lr_backup_{datetime.now().strftime('%d-%m-%Y')}.csv",
         mime="text/csv",
     )
-    st.dataframe(df, use_container_width=True)
+    st.dataframe(df_current, use_container_width=True)
 else:
     st.info("No saved records found yet.")
