@@ -359,7 +359,7 @@ if 'lr_data' in st.session_state:
         <div>
             {get_receipt_html("CONSIGNOR COPY")}
             {get_receipt_html("CONSIGNEE COPY")}
-            {get_receipt_html("OFFICE COPY"}
+            {get_receipt_html("DRIVER COPY"}
         </div>
     </body>
     </html>
